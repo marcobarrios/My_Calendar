@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MyCalendarParent" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="title_text">@android:color/black</item>
+        <item name="body_text">#303030</item>
+        <item name="drawer_background">@color/drawer_background</item>
+        <item name="divider">@color/divider</item>
+        <item name="empty_text">@color/empty_text</item>
+
+        <item name="android:dropDownListViewStyle">
+            @android:style/Widget.Holo.Light.ListView.DropDown
+        </item>
+        <item name="android:actionBarStyle">@style/ActionBar.Solid.MyCalendar</item>
+        <item name="android:actionModeBackground">@drawable/ab_solid_cabinet</item>
+
+        <item name="android:actionBarSize">56dp</item>
+        <item name="android:dialogTheme">@android:style/Theme.Holo.Light.Dialog</item>
+        <item name="android:itemTextAppearance">@style/ActionMenuTextAppearance</item>
+    </style>
+
+    <style name="ActionMenuTextAppearance">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="ActionBar.Solid.MyCalendar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:icon">@drawable/transparent</item>
+        <item name="android:background">@drawable/ab_solid_cabinet</item>
+        <item name="android:titleTextStyle">@style/ActionTitleTextStyle</item>
+    </style>
+
+    <style name="ActionTitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">#fff</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>

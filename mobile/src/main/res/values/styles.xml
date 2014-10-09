@@ -1,8 +1,14 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-    </style>
+
+    <style name="Theme.MyCalendar" parent="@style/MyCalendarParent" />
+
+    <style name="Theme.MyCalendarStatusTranslucent" parent="@style/Theme.MyCalendar" />
+
+    <style name="Theme.MyCalendarNavTranslucent" parent="@style/Theme.MyCalendar" />
+
+    <style name="Theme.MyCalendarNavStatusTranslucent" parent="@style/Theme.MyCalendar" />
+
 
 </resources>
