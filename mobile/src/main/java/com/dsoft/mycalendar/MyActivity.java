@@ -161,7 +161,7 @@ public class MyActivity extends Activity {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                //fragment = new Fragmen_Calendario();
+                fragment = new FragmentCalendario();
                 break;
             case 1:
                 //fragment = new Fragment_Anotaciones();
