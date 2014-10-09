@@ -5,4 +5,22 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <string-array name="nav_drawer_items">
+        <item >Calendario</item>
+        <item >Anotaciones</item>
+        <item >Cursos</item>
+        <item >Notas</item>
+    </string-array>
+
+    <array name="nav_drawer_icons">
+        <item>@android:drawable/ic_menu_my_calendar</item>
+        <item>@android:drawable/star_on</item>
+        <item>@android:drawable/arrow_down_float</item>
+        <item>@android:drawable/ic_dialog_email</item>
+    </array>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="action_websearch">Web search</string>
+
 </resources>
