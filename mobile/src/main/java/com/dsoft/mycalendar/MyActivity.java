@@ -164,13 +164,13 @@ public class MyActivity extends Activity {
                 fragment = new FragmentCalendario();
                 break;
             case 1:
-                //fragment = new Fragment_Anotaciones();
+                fragment = new FragmentAnotaciones();
                 break;
             case 2:
-                //fragment = new Fragment_Cursos();
+                fragment = new FragmentCursos();
                 break;
             case 3:
-                //fragment = new Fragment_Notas();
+                fragment = new FragmentNotas();
                 break;
 
             default:

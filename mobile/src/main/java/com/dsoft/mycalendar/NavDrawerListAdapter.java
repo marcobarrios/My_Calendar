@@ -6,6 +6,7 @@ package com.dsoft.mycalendar;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class NavDrawerListAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<NavDrawerItem> navDrawerItems;
+    private AssetManager assets;
 
     public NavDrawerListAdapter(Context context, ArrayList<NavDrawerItem> navDrawerItems){
         this.context = context;
@@ -51,6 +53,8 @@ public class NavDrawerListAdapter extends BaseAdapter {
         ImageView imgIcon = (ImageView) convertView.findViewById(R.id.icon);
         TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
 
+        //Typeface font = Typeface.createFromAsset(getAssets(), "Roboto-Light.ttf");
+        //txtTitle.setTypeface(font);
 
         imgIcon.setImageResource(navDrawerItems.get(position).getIcon());
         txtTitle.setText(navDrawerItems.get(position).getTitle());
@@ -60,5 +64,9 @@ public class NavDrawerListAdapter extends BaseAdapter {
 
     public Context getContext() {
         return context;
+    }
+
+    public AssetManager getAssets() {
+        return assets;
     }
 }
