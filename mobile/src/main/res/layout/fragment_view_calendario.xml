@@ -3,9 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="12dp"
-    android:paddingRight="12dp"
-    android:paddingTop="12dp"
-    android:paddingBottom="12dp"
+    android:padding="12dp"
     tools:context=".MyActivity">
+
+    <CalendarView
+        android:id="@+id/calendario"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:selectedDateVerticalBar="@color/MyCalendar_color_darker"
+        android:selectedWeekBackgroundColor="@color/calendario_claro"
+        android:weekSeparatorLineColor="@color/transparente"
+        android:showWeekNumber="false"
+        android:firstDayOfWeek="2">
+
+        </CalendarView>
 </RelativeLayout>

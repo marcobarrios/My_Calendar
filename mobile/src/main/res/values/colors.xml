@@ -28,5 +28,8 @@
     <color name="empty_text">#C7C7C7</color>
     <color name="empty_text_dark">#575757</color>
 
+    <color name="transparente">#00FFFFFF</color>
+    <color name="calendario_claro">#5677fc</color>
+
 
 </resources>
