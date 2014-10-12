@@ -11,6 +11,7 @@
     <color name="MyCalednar_color">#4e6cef</color>
     <color name="MyCalendar_color_darker">#455ede</color>
     <color name="MyCalendar_accent_color">#e91e63</color>
+    <color name="MyCalendar_accent_color_light">#ff4081</color>
     <color name="MyCalendar_gray">#757575</color>
     <color name="MyCalendar_gray_darker">#616161</color>
 
@@ -30,6 +31,8 @@
 
     <color name="transparente">#00FFFFFF</color>
     <color name="calendario_claro">#5677fc</color>
+    <color name="calendario_unfocused_month">#9e9e9e</color>
+    <color name="calendario_focused_month">#000000</color>
 
 
 </resources>
