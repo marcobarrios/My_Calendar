@@ -17,4 +17,5 @@
         android:unfocusedMonthDateColor="@color/calendario_unfocused_month"
         android:dateTextAppearance="@android:style/TextAppearance.Holo.Medium">
     </CalendarView>
+
 </RelativeLayout>

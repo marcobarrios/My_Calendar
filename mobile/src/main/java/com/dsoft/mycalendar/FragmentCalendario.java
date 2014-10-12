@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CalendarView;
 
 /**
@@ -13,6 +14,7 @@ import android.widget.CalendarView;
 public class FragmentCalendario extends Fragment {
     View v;
     CalendarView calendario;
+    Button btn;
 
     private void inicializarCalendario() {
         calendario = (CalendarView)v.findViewById(R.id.calendario);
@@ -25,8 +27,7 @@ public class FragmentCalendario extends Fragment {
         calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int anio, int mes, int dia) {
-                //mes = mes + 1;
-                //Toast.makeText(getActivity().getApplicationContext(), "Crear evento para: " + dia + "/" + mes + "/" + anio, Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -36,7 +37,18 @@ public class FragmentCalendario extends Fragment {
 
         v = inflater.inflate(R.layout.fragment_view_calendario, container, false);
         inicializarCalendario();
+        //inicializarButon();
         return v;
-
     }
+
+    /*public void inicializarButon() {
+        btn = (Button)v.findViewById(R.id.boton_nuevo_evento);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i =  new Intent(getActivity().getApplicationContext(), ActivityEvento.class);
+                startActivity(i);
+            }
+        });
+    }*/
 }
