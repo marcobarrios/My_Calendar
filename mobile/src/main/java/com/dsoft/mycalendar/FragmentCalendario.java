@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.Toast;
+
 import com.faizmalkani.floatingactionbutton.FloatingActionButton;
 
 /**
@@ -16,6 +18,7 @@ public class FragmentCalendario extends Fragment {
     View v;
     CalendarView calendario;
     FloatingActionButton btn;
+    protected static final int REQUEST_CODE = 10;
 
     private void inicializarCalendario() {
         calendario = (CalendarView)v.findViewById(R.id.calendario);
@@ -48,9 +51,22 @@ public class FragmentCalendario extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i =  new Intent(getActivity().getApplicationContext(), ActivityEvento.class);
-                i.putExtra("fecha", calendario.getDate());
-                startActivity(i);
+                i.putExtra("fecha", String.valueOf(calendario.getDate()));
+                startActivityForResult(i, REQUEST_CODE);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == REQUEST_CODE) {
+                String result = data.getStringExtra("result");
+                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+            }
+        }catch(Exception exp) {
+
+        }
     }
 }

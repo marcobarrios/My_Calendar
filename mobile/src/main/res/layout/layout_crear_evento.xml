@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:parentActivityName="com.dsoft.mycalendar.MyActivity">
@@ -8,9 +9,33 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="LAYOUT PARA CREAR NUEVO EVENTO"
-        android:id="@+id/textView"
+        android:id="@+id/texto_fecha"
         android:gravity="center"
         android:padding="30dp"
-        android:layout_gravity="center" />
-</LinearLayout>
+        android:layout_gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/titulo_evento"
+        android:layout_alignBottom="@id/texto_fecha"
+        android:hint="Título del Evento"
+        android:singleLine="true"/>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.faizmalkani.floatingactionbutton.FloatingActionButton
+            android:id="@+id/retornar"
+            app:color="@color/MyCalendar_color_darker"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="8dp"/>
+
+    </FrameLayout>
+</RelativeLayout>
