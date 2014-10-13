@@ -12,7 +12,7 @@
             @android:style/Widget.Holo.Light.ListView.DropDown
         </item>
         <item name="android:actionBarStyle">@style/ActionBar.Solid.MyCalendar</item>
-        <item name="android:actionModeBackground">@drawable/ab_solid_cabinet</item>
+        <item name="android:actionModeBackground">@drawable/ab_solid_mycalendar</item>
 
         <item name="android:actionBarSize">56dp</item>
         <item name="android:dialogTheme">@android:style/Theme.Holo.Light.Dialog</item>
@@ -25,7 +25,7 @@
 
     <style name="ActionBar.Solid.MyCalendar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:icon">@drawable/transparent</item>
-        <item name="android:background">@drawable/ab_solid_cabinet</item>
+        <item name="android:background">@drawable/ab_solid_mycalendar</item>
         <item name="android:titleTextStyle">@style/ActionTitleTextStyle</item>
     </style>
 

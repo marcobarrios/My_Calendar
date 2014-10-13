@@ -24,7 +24,7 @@ public class ActivityEvento extends Activity {
         ActionBar actionbar = this.getActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         Bundle reicieveParams = getIntent().getExtras();
-        TextView texto = (TextView)findViewById(R.id.textView);
+        TextView texto = (TextView)findViewById(R.id.texto_fecha);
         texto.setText(reicieveParams.getString("fecha"));
 
         btn = (FloatingActionButton)findViewById(R.id.retornar);
