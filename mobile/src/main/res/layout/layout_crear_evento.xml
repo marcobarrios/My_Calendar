@@ -32,6 +32,7 @@
         <com.faizmalkani.floatingactionbutton.FloatingActionButton
             android:id="@+id/retornar"
             app:color="@color/MyCalendar_color_darker"
+            app:drawable="@drawable/ic_action_save"
             android:layout_width="72dp"
             android:layout_height="72dp"
             android:layout_gravity="bottom|center"

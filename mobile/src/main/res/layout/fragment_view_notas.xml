@@ -28,6 +28,7 @@
         <com.faizmalkani.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_nota"
             app:color="#e91e63"
+            app:drawable="@drawable/ic_action_new"
             android:layout_width="72dp"
             android:layout_height="72dp"
             android:layout_gravity="bottom|right"
