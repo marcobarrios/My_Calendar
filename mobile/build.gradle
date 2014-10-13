@@ -23,4 +23,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     wearApp project(':wear')
     compile 'com.google.android.gms:play-services:+'
+    compile project(':fab')
+    compile 'com.github.traex.calendarlistview:library:1.1.2'
 }

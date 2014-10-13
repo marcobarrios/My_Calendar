@@ -4,14 +4,14 @@
     <color name="list_item_title_pressed">#272727</color>
     <color name="list_background">#fafafa</color>
     <color name="list_background_pressed">#fafafa</color>
-    <color name="list_background_extras">#9e9e9e</color>
+    <color name="list_background_extras">#bdbdbd</color>
     <color name="list_divider">#fafafa</color>
 
 
-    <color name="MyCalednar_color">#4e6cef</color>
-    <color name="MyCalendar_color_darker">#455ede</color>
+    <color name="MyCalednar_color">#3f51b5</color>
+    <color name="MyCalendar_color_darker">#3f51b5</color>
     <color name="MyCalendar_accent_color">#e91e63</color>
-    <color name="MyCalendar_accent_color_light">#ff4081</color>
+    <color name="MyCalendar_color_light">#91a7ff</color>
     <color name="MyCalendar_gray">#757575</color>
     <color name="MyCalendar_gray_darker">#616161</color>
 
@@ -30,7 +30,8 @@
     <color name="empty_text_dark">#575757</color>
 
     <color name="transparente">#00FFFFFF</color>
-    <color name="calendario_claro">#5677fc</color>
+    <color name="DateVerticalBar">#3f51b5</color>
+    <color name="calendario_claro">#4dd0e1</color>
     <color name="calendario_unfocused_month">#9e9e9e</color>
     <color name="calendario_focused_month">#000000</color>
 

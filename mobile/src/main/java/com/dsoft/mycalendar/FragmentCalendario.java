@@ -1,12 +1,13 @@
 package com.dsoft.mycalendar;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CalendarView;
+import com.faizmalkani.floatingactionbutton.FloatingActionButton;
 
 /**
  * Created by Marco Barrios on 08/10/2014.
@@ -14,13 +15,13 @@ import android.widget.CalendarView;
 public class FragmentCalendario extends Fragment {
     View v;
     CalendarView calendario;
-    Button btn;
+    FloatingActionButton btn;
 
     private void inicializarCalendario() {
         calendario = (CalendarView)v.findViewById(R.id.calendario);
-        calendario.setSelectedDateVerticalBar(R.color.MyCalendar_color_darker);
+        calendario.setSelectedDateVerticalBar(R.color.DateVerticalBar);
         calendario.setWeekSeparatorLineColor(getResources().getColor(R.color.transparente));
-        calendario.setSelectedWeekBackgroundColor(getResources().getColor(R.color.MyCalendar_accent_color_light));
+        calendario.setSelectedWeekBackgroundColor(getResources().getColor(R.color.calendario_claro));
         calendario.setShowWeekNumber(false);
         calendario.setFirstDayOfWeek(2);
 
@@ -37,18 +38,19 @@ public class FragmentCalendario extends Fragment {
 
         v = inflater.inflate(R.layout.fragment_view_calendario, container, false);
         inicializarCalendario();
-        //inicializarButon();
+        inicializarButon();
         return v;
     }
 
-    /*public void inicializarButon() {
-        btn = (Button)v.findViewById(R.id.boton_nuevo_evento);
+    public void inicializarButon() {
+        btn = (FloatingActionButton)v.findViewById(R.id.fab_calendario);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i =  new Intent(getActivity().getApplicationContext(), ActivityEvento.class);
+                i.putExtra("fecha", calendario.getDate());
                 startActivity(i);
             }
         });
-    }*/
+    }
 }
