@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="@drawable/list_selector">
+    android:background="@drawable/list_selector"
+    android:fitsSystemWindows="false"
+    android:clipToPadding="false">
 
     <ImageView
         android:id="@+id/icon"
@@ -11,7 +13,9 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:fitsSystemWindows="false"
+        android:clipToPadding="false"/>
 
     <TextView
         android:id="@+id/title"

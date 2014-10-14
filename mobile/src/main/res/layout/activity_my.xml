@@ -2,12 +2,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
+    android:clipToPadding="false">
+
+    <ScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ScrollView>
 
     <FrameLayout
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false"
+        android:clipToPadding="false">
+
+    </FrameLayout>
 
     <ListView
         android:id="@+id/list_slidermenu"
@@ -16,6 +28,8 @@
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
         android:dividerHeight="2dp"
-        android:background="@color/list_background"/>
+        android:background="@color/list_background"
+        android:fitsSystemWindows="false"
+        android:clipToPadding="false"/>
 
 </android.support.v4.widget.DrawerLayout>

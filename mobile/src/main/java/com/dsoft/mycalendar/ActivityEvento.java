@@ -70,6 +70,6 @@ public class ActivityEvento extends Activity implements OnDateSelected {
     @Override
     public void onDateSelected(String date) {
         ////Retorno de la fecha
-        Toast.makeText(this,date,Toast.LENGTH_LONG).show();
+        Toast.makeText(this,date,Toast.LENGTH_SHORT).show();
     }
 }
