@@ -7,13 +7,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.dsoft.mycalendar.Interfaces.OnDateSelected;
 import com.faizmalkani.floatingactionbutton.FloatingActionButton;
 
 /**
  * Created by Marco Barrios on 12/10/2014.
  */
-public class ActivityEvento extends Activity {
+public class ActivityEvento extends Activity implements OnDateSelected {
     private ActionBar supportActionBar;
     FloatingActionButton btn;
     Button inicio, fin;
@@ -63,5 +65,11 @@ public class ActivityEvento extends Activity {
         intent.putExtra("result", "Evento Guardado");
         setResult(OK_RESULT_CODE, intent);
         finish();
+    }
+
+    @Override
+    public void onDateSelected(String date) {
+        ////Retorno de la fecha
+        Toast.makeText(this,date,Toast.LENGTH_LONG).show();
     }
 }
