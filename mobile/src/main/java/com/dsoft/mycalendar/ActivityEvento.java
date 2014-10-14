@@ -2,10 +2,11 @@ package com.dsoft.mycalendar;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
 
 import com.faizmalkani.floatingactionbutton.FloatingActionButton;
 
@@ -15,6 +16,7 @@ import com.faizmalkani.floatingactionbutton.FloatingActionButton;
 public class ActivityEvento extends Activity {
     private ActionBar supportActionBar;
     FloatingActionButton btn;
+    Button inicio, fin;
     private static final int OK_RESULT_CODE = 1;
 
     @Override
@@ -23,9 +25,10 @@ public class ActivityEvento extends Activity {
         setContentView(R.layout.layout_crear_evento);
         ActionBar actionbar = this.getActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
-        Bundle reicieveParams = getIntent().getExtras();
-        TextView texto = (TextView)findViewById(R.id.texto_fecha);
-        texto.setText(reicieveParams.getString("fecha"));
+
+        //Bundle reicieveParams = getIntent().getExtras();
+        //TextView texto = (TextView)findViewById(R.id.texto_fecha);
+        //texto.setText(reicieveParams.getString("fecha"));
 
         btn = (FloatingActionButton)findViewById(R.id.retornar);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -34,11 +37,30 @@ public class ActivityEvento extends Activity {
                 returnParams();
             }
         });
+
+        inicio = (Button)findViewById(R.id.fecha_inicio);
+        fin = (Button)findViewById(R.id.fecha_fin);
+
+        inicio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.show(getFragmentManager(), "datePicker");
+            }
+        });
+
+        fin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.show(getFragmentManager(), "datePicker");
+            }
+        });
     }
 
     protected void returnParams() {
         Intent intent = new Intent();
-        intent.putExtra("result", "Retornar Fecha");
+        intent.putExtra("result", "Evento Guardado");
         setResult(OK_RESULT_CODE, intent);
         finish();
     }

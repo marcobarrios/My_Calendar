@@ -31,7 +31,7 @@
 
     <color name="transparente">#00FFFFFF</color>
     <color name="DateVerticalBar">#3f51b5</color>
-    <color name="calendario_claro">#4dd0e1</color>
+    <color name="calendario_claro">#b2ebf2</color>
     <color name="calendario_unfocused_month">#9e9e9e</color>
     <color name="calendario_focused_month">#000000</color>
 

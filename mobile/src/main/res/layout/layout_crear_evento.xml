@@ -6,28 +6,60 @@
     android:layout_height="match_parent"
     android:parentActivityName="com.dsoft.mycalendar.MyActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/texto_fecha"
-        android:gravity="center"
-        android:padding="30dp"
-        android:layout_gravity="center"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/titulo_evento"
-        android:layout_alignBottom="@id/texto_fecha"
-        android:hint="Título del Evento"
-        android:singleLine="true"/>
-
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/texto_fecha"
+                android:text="Crear Nuevo Evento"
+                android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+                android:gravity="center"
+                android:paddingTop="20dp"
+                android:layout_gravity="center"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:id="@+id/titulo_evento"
+                android:hint="Título del Evento"
+                android:singleLine="true"/>
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="100dp"
+                android:paddingTop="20dp"
+                android:id="@+id/texto_evento"
+                android:hint="Descripción del Evento"
+                android:singleLine="false"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fecha_inicio"
+                android:text="Fecha de Inicio"
+                android:background="@color/calendario_claro"
+                android:textColor="@color/calendario_focused_month"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fecha_fin"
+                android:text="Fecha de Finalización"
+                android:background="#80deea"
+                android:textColor="@color/calendario_focused_month"/>
+
+            </LinearLayout>
 
         <com.faizmalkani.floatingactionbutton.FloatingActionButton
             android:id="@+id/retornar"

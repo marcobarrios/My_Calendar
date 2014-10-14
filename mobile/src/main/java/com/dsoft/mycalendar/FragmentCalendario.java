@@ -51,7 +51,7 @@ public class FragmentCalendario extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i =  new Intent(getActivity().getApplicationContext(), ActivityEvento.class);
-                i.putExtra("fecha", String.valueOf(calendario.getDate()));
+                //i.putExtra("fecha", String.valueOf(calendario.getDate()));
                 startActivityForResult(i, REQUEST_CODE);
             }
         });
