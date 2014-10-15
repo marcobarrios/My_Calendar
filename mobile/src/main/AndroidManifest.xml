@@ -28,6 +28,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dsoft.mycalendar.MyActivity" />
         </activity>
+
+        <activity
+            android:name=".ActivityAnotacion"
+            android:label="Nueva Anotacion"
+            android:theme="@android:style/Theme.Holo.Light.Dialog"
+            android:parentActivityName="com.dsoft.mycalendar.MyActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dsoft.mycalendar.MyActivity" />
+        </activity>
+
     </application>
 
 </manifest>

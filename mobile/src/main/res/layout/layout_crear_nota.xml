@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:parentActivityName="com.dsoft.mycalendar.MyActivity">
+
+
+    <EditText
+        android:id="@+id/titulo_nota"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Título de la Anotacion"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:singleLine="true"/>
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal">
+
+        <TableRow>
+
+            <EditText
+                android:id="@+id/descripcion_nota"
+                android:layout_width="fill_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="10dp"
+                android:hint="Descripción de la Anotacion"
+                android:layout_weight="2"
+                android:singleLine="false"/>
+
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/btn_descripcion_oral"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:paddingTop="5dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/transparente"
+        android:drawableRight="@drawable/ic_microfono"/>
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal">
+
+        <TableRow>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/btn_cancelar_nota"
+            android:background="@color/transparente"
+            android:text="Cancelar"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Aceptar"
+                android:background="@color/transparente"
+                android:id="@+id/btn_aceptar_nota"/>
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>
