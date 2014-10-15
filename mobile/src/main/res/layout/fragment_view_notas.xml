@@ -12,24 +12,14 @@
     android:paddingBottom="12dp"
     tools:context=".MyActivity">
 
-    <com.andexert.calendarlistview.library.DayPickerView
-        android:id="@+id/pickerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
         <com.faizmalkani.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_nota"
             app:color="#e91e63"
-            app:drawable="@drawable/ic_action_new"
+            app:drawable="@drawable/ic_nota_nuevo"
             android:layout_width="72dp"
             android:layout_height="72dp"
             android:layout_gravity="bottom|right"

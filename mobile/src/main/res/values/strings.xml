@@ -13,10 +13,10 @@
     </string-array>
 
     <array name="nav_drawer_icons">
-        <item>@android:drawable/ic_menu_my_calendar</item>
-        <item>@android:drawable/star_on</item>
-        <item>@android:drawable/arrow_down_float</item>
-        <item>@android:drawable/ic_dialog_email</item>
+        <item>@drawable/ic_evento</item>
+        <item>@drawable/ic_anotacion</item>
+        <item>@drawable/ic_curso</item>
+        <item>@drawable/ic_nota</item>
     </array>
 
     <string name="drawer_open">Open navigation drawer</string>

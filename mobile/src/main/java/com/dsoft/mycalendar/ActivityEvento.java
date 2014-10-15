@@ -5,7 +5,6 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -32,14 +31,14 @@ public class ActivityEvento extends Activity implements OnDateSelected {
         ActionBar actionbar = this.getActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+       /* if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
         }
 
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setStatusBarTintResource(R.color.MyCalendar_color_darker);
-
+        */
 
         //Bundle reicieveParams = getIntent().getExtras();
         //TextView texto = (TextView)findViewById(R.id.texto_fecha);
@@ -96,6 +95,6 @@ public class ActivityEvento extends Activity implements OnDateSelected {
     @Override
     public void onDateSelected(String date) {
         ////Retorno de la fecha
-        Toast.makeText(this,date,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,date, Toast.LENGTH_SHORT).show();
     }
 }
