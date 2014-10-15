@@ -21,6 +21,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/texto_fecha"
                 android:text="Crear Nuevo Evento"
+                android:textStyle="bold"
                 android:textAppearance="@android:style/TextAppearance.Holo.Medium"
                 android:gravity="center"
                 android:paddingTop="20dp"

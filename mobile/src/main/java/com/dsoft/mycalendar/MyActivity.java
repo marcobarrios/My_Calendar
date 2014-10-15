@@ -69,6 +69,10 @@ public class MyActivity extends Activity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
 
+        View header = getLayoutInflater().inflate(R.layout.list_header, null);
+
+        //mDrawerList.addHeaderView(header);
+
         navDrawerItems = new ArrayList<NavDrawerItem>();
 
         // agregar un nuevo item al menu deslizante
