@@ -190,7 +190,7 @@ public class MyActivity extends Activity {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new FragmentCalendario();
+                fragment = new FragmentMonthCalender();;
                 break;
             case 1:
                 fragment = new FragmentAnotaciones();

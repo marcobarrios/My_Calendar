@@ -4,4 +4,12 @@
     <style name="Theme.MyCalendarStatusTranslucent" parent="@style/Theme.MyCalendar" />
     <style name="Theme.MyCalendarNavTranslucent" parent="@style/Theme.MyCalendar" />
     <style name="Theme.MyCalendarNavStatusTranslucent" parent="@style/Theme.MyCalendar" />
+
+    <!-- Tema utilizado en custom calender-->
+    <style name="calendar_event_style" parent="@android:style/TextAppearance.Small">
+    <item name="android:textColor">#FF6600</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:textSize">8sp</item>
+    </style>
+
 </resources>
