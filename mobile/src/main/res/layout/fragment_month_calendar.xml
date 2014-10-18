@@ -46,29 +46,12 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/selectedDayMonthYear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/calendar_top_header"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FFFFFF" >
-    </Button>
-
-    <LinearLayout
+    <GridView
+        android:id="@+id/days"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" >
-
-        <ImageView
-            android:id="@+id/calendarheader"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/calendar_days" >
-        </ImageView>
-    </LinearLayout>
+        android:numColumns="7" >
+    </GridView>
 
     <GridView
         android:id="@+id/calendar"
@@ -90,7 +73,6 @@
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="16dp"
             android:layout_marginRight="16dp" />
-
     </FrameLayout>
 
 </LinearLayout>

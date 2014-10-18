@@ -12,7 +12,7 @@
         android:layout_gravity="center"
         android:background="@drawable/calendar_button_selector"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FFFFFF" >
+        android:textColor="#FFFFFF">
     </Button>
 
     <TextView
