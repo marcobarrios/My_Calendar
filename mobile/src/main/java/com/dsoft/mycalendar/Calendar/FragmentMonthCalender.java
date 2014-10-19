@@ -19,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dsoft.mycalendar.ActivityEvento;
 import com.dsoft.mycalendar.Interfaces.OnDateSelected;
 import com.dsoft.mycalendar.R;
 import com.faizmalkani.floatingactionbutton.FloatingActionButton;
@@ -293,6 +292,8 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
        String selection = "((" + CalendarContract.Events.DTSTART
                + " >= ?) AND (" + CalendarContract.Events.DTEND + " <= ?) " +
                "OR (" + CalendarContract.Events.RRULE + " is not null ))";
+
+
        Time t = new Time();
        t.set(0,0,0,day, month, year);
        String dtStart = Long.toString(t.toMillis(false));

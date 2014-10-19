@@ -21,7 +21,7 @@
         </activity>
 
         <activity
-            android:name=".ActivityEvento"
+            android:name=".Calendar.ActivityEvento"
             android:label="Nuevo Evento"
             android:parentActivityName="com.dsoft.mycalendar.MyActivity">
             <meta-data
@@ -30,7 +30,7 @@
         </activity>
 
         <activity
-            android:name=".ActivityAnotacion"
+            android:name=".Notes.ActivityAnotacion"
             android:label="Nueva Anotacion"
             android:theme="@android:style/Theme.Holo.Light.Dialog"
             android:parentActivityName="com.dsoft.mycalendar.MyActivity">

@@ -1,4 +1,4 @@
-package com.dsoft.mycalendar;
+package com.dsoft.mycalendar.Dialogs;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;

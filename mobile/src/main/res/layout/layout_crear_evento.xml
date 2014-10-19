@@ -17,7 +17,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/texto_fecha"
                 android:text="Crear Nuevo Evento"
@@ -27,7 +27,7 @@
                 android:paddingTop="20dp"
                 android:layout_gravity="center"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"/>
 
             <EditText
                 android:layout_width="fill_parent"
@@ -45,23 +45,91 @@
                 android:hint="Descripción del Evento"
                 android:singleLine="false"/>
 
-            <Button
+            <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/fecha_inicio"
-                android:text="Fecha de Inicio"
-                android:background="@color/calendario_claro"
-                android:textColor="@color/calendario_focused_month"/>
+                android:layout_height="25dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="10dp">
 
-            <Button
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:hint="TODO EL DIA"/>
+
+                <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:id="@+id/es_todo_el_dia"
+                    android:layout_marginLeft="10dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="20dp"
+                android:hint="DESDE"/>
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/fecha_fin"
-                android:text="Fecha de Finalización"
-                android:background="#80deea"
-                android:textColor="@color/calendario_focused_month"/>
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fecha_inicio"
+                    android:text="Fecha de Inicio"
+                    android:background="@color/calendario_claro"
+                    android:textColor="@color/calendario_focused_month"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tiempo_inicio"
+                    android:background="@color/calendario_claro"
+                    android:textColor="@color/calendario_focused_month"
+                    android:text="Horario Inicio"
+                    android:layout_marginRight="10dp"/>
 
             </LinearLayout>
+
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="20dp"
+                android:hint="HASTA"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fecha_fin"
+                    android:text="Fecha de Finalización"
+                    android:background="@color/calendario_claro"
+                    android:textColor="@color/calendario_focused_month"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tiempo_fin"
+                    android:background="@color/calendario_claro"
+                    android:textColor="@color/calendario_focused_month"
+                    android:text="Horario Fin"
+                    android:layout_marginRight="10dp"/>
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
 
         <com.faizmalkani.floatingactionbutton.FloatingActionButton
             android:id="@+id/retornar"

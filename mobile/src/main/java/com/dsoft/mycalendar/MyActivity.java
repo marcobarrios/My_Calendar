@@ -20,6 +20,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.dsoft.mycalendar.Calendar.FragmentMonthCalender;
+import com.dsoft.mycalendar.Cursos.FragmentCursos;
+import com.dsoft.mycalendar.Cursos.FragmentNotas;
+import com.dsoft.mycalendar.Notes.FragmentAnotaciones;
 
 import java.util.ArrayList;
 

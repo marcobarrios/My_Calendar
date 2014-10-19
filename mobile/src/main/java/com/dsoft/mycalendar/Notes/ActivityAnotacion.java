@@ -1,7 +1,9 @@
-package com.dsoft.mycalendar;
+package com.dsoft.mycalendar.Notes;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import com.dsoft.mycalendar.R;
 
 /**
  * Created by Marco Barrios on 15/10/2014.
