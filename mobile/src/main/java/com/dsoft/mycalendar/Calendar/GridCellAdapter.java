@@ -1,6 +1,7 @@
 package com.dsoft.mycalendar.Calendar;
 
 import android.content.Context;
+import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.dsoft.mycalendar.Interfaces.OnDateSelected;
 import com.dsoft.mycalendar.R;
 
 import java.text.ParseException;
@@ -26,7 +28,7 @@ import java.util.List;
 public class GridCellAdapter extends BaseAdapter implements View.OnClickListener {
     private static final String tag = "GridCellAdapter";
     private final Context context;
-
+    private OnDateSelected listener ;
     private final List<String> list;
     private static final int DAY_OFFSET = 1;
     private final String[] weekdays = new String[] { "Sun", "Mon", "Tue",
@@ -46,9 +48,17 @@ public class GridCellAdapter extends BaseAdapter implements View.OnClickListener
     private final SimpleDateFormat dateFormatter = new SimpleDateFormat(
             "dd-MMM-yyyy");
 
+    public static final String[] EVENT_PROJECTION = new String[] {
+            CalendarContract.Calendars._ID, // 0
+            CalendarContract.Calendars.ACCOUNT_NAME, // 1
+            CalendarContract.Calendars.CALENDAR_DISPLAY_NAME // 2
+    };
+
+    private static final int PROJECTION_DISPLAY_NAME_INDEX = 2;
+
     // Days in Current Month
     public GridCellAdapter(Context context, int textViewResourceId,
-                           int month, int year) {
+                           int month, int year,FragmentMonthCalender parent) {
         super();
         this.context = context;
         this.list = new ArrayList<String>();
@@ -66,6 +76,7 @@ public class GridCellAdapter extends BaseAdapter implements View.OnClickListener
 
         // Find Number of Events
         eventsPerMonthMap = findNumberOfEventsPerMonth(year, month);
+        listener = (OnDateSelected) parent;
     }
 
     private String getMonthAsString(int i) {
@@ -211,7 +222,11 @@ public class GridCellAdapter extends BaseAdapter implements View.OnClickListener
      */
     private HashMap<String, Integer> findNumberOfEventsPerMonth(int year,
                                                                 int month) {
+        
+
         HashMap<String, Integer> map = new HashMap<String, Integer>();
+
+
 
         return map;
     }
@@ -285,11 +300,12 @@ public class GridCellAdapter extends BaseAdapter implements View.OnClickListener
     @Override
     public void onClick(View view) {
         String date_month_year = (String) view.getTag();
-
+        //queryCalendar(view);
         gridcell.setActivated(false);
         gridcellCurrent.setActivated(false);
         view.setActivated(true);
         gridcell = (Button)view;
+        listener.onDateSelected(date_month_year);
         //Toast.makeText(context, date_month_year, Toast.LENGTH_LONG).show();
 
         Log.e("Selected date", date_month_year);
@@ -317,4 +333,27 @@ public class GridCellAdapter extends BaseAdapter implements View.OnClickListener
     public int getCurrentWeekDay() {
         return currentWeekDay;
     }
+
+    /*public void queryCalendar(View view) {
+        Cursor cur = null;
+        ContentResolver cr = context.getContentResolver();
+        Uri uri = CalendarContract.Calendars.CONTENT_URI;
+        String selection = "((" + CalendarContract.Calendars.ACCOUNT_NAME + " = ?) AND ("
+                + CalendarContract.Calendars.ACCOUNT_TYPE + " = ?))";
+
+        String[] selectionArgs = new String[] { "ematul.92@gmail.com",
+                "com.google" };
+        cur = cr.query(uri, EVENT_PROJECTION, selection, selectionArgs, null);
+
+        while (cur.moveToNext()) {
+            String displayName = null;
+            displayName = cur.getString(PROJECTION_DISPLAY_NAME_INDEX);
+            Toast.makeText(context, "Calendar " + displayName, Toast.LENGTH_SHORT)
+                    .show();
+        }
+    }*/
+
+
+
+
 }
