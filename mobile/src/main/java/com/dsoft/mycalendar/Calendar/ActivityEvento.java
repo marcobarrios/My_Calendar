@@ -31,6 +31,7 @@ import com.dsoft.mycalendar.Objects.EventItem;
 import com.dsoft.mycalendar.R;
 import com.faizmalkani.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -165,6 +166,7 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
         edt_description = (EditText) findViewById(R.id.texto_evento);
         iniciarPlantilla();
     }
+
 
     public void men(String m) {
         Toast.makeText(this, m, Toast.LENGTH_SHORT).show();

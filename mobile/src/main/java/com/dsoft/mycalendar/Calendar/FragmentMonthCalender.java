@@ -16,14 +16,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dsoft.mycalendar.Interfaces.OnDateSelected;
+import com.dsoft.mycalendar.Objects.EventItem;
 import com.dsoft.mycalendar.R;
 import com.faizmalkani.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -45,6 +48,7 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
     private GridView daysView;
     private GridCellAdapter adapter;
     private Calendar _calendar;
+    private ListView list_events;
     @SuppressLint("NewApi")
     private int month, year;
     @SuppressWarnings("unused")
@@ -89,7 +93,12 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
                 R.id.calendar_day_gridcell, month, year,this);
         adapter.notifyDataSetChanged();
         calendarView.setAdapter(adapter);
-        getLastThreeEvents(_calendar.get(Calendar.DAY_OF_MONTH),month-1,year);
+
+        list_events = (ListView) v.findViewById(R.id.list_events);
+        //list_events.setAdapter(getAdapaterEvent(getEventsOfDay(_calendar.get(Calendar.DAY_OF_MONTH),month,year)));
+
+
+        getLastThreeEvents(_calendar.get(Calendar.DAY_OF_MONTH), month - 1, year);
         return v;
     }
 
@@ -147,6 +156,11 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
             Log.d(getTag(), "Setting Prev Month in GridCellAdapter: " + "Month: "
                     + month + " Year:listener = (OnDateSelected) activity " + year);
             setGridCellAdapterToDate(month, year);
+            Time time = new Time();
+            time.setToNow();
+            list_events.setAdapter(getAdapaterEvent(getEventsOfDay(_calendar.get(Calendar.DAY_OF_MONTH),month-1,year)));
+            getLastThreeEvents(time.monthDay, month - 1, year);
+
         }
         if (v == nextMonth) {
             if (month > 11) {
@@ -158,6 +172,10 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
             Log.d(getTag(), "Setting Next Month in GridCellAdapter: " + "Month: "
                     + month + " Year: " + year);
             setGridCellAdapterToDate(month, year);
+            Time time = new Time();
+            time.setToNow();
+            list_events.setAdapter(getAdapaterEvent(getEventsOfDay(_calendar.get(Calendar.DAY_OF_MONTH),month-1,year)));
+            getLastThreeEvents(time.monthDay,month - 1,year);
         }
 
     }
@@ -353,12 +371,75 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
 
                 ++l_cnt;
 
-            } while (l_managedCursor.moveToNext() && l_cnt < 3);
+            } while (l_managedCursor.moveToNext());
 
             events.setText(l_displayText.toString());
 
+        }else{
+            events.setText("");
         }
 
+
+
+    }
+
+    private ArrayList <EventItem> getEventsOfDay(int day,int month ,int year ) {
+
+        String selection = "((" + CalendarContract.Events.DTSTART
+                + " >= ?) AND (" + CalendarContract.Events.DTEND + " <= ?) " +
+                "OR (" + CalendarContract.Events.RRULE + " is not null ))";
+
+        Time t = new Time();
+        t.set(0,0,0,day, month, year);
+        String dtStart = Long.toString(t.toMillis(false));
+        t.set(59, 59, 23, day, month, year);
+        String dtEnd = Long.toString(t.toMillis(false));
+        String[] selectionArgs = new String[] { dtStart, dtEnd };
+
+        String[] l_projection = new String[]{"title", "dtstart", "dtend"};
+
+        Cursor l_managedCursor = getActivity().managedQuery(CalendarContract.Events.CONTENT_URI,
+                null, selection, selectionArgs, null);
+        ArrayList <EventItem> res = null;
+
+        if (l_managedCursor.moveToFirst()) {
+
+            int l_cnt = 0;
+
+            String l_title;
+
+            String l_begin;
+
+            String l_end;
+
+            res = new ArrayList<EventItem>();
+
+            StringBuilder l_displayText = new StringBuilder();
+
+            int l_colTitle = l_managedCursor.getColumnIndex(l_projection[0]);
+
+            int l_colBegin = l_managedCursor.getColumnIndex(l_projection[1]);
+
+            int l_colEnd = l_managedCursor.getColumnIndex(l_projection[2]);
+
+            do {
+
+                l_title = l_managedCursor.getString(l_colTitle);
+
+                // l_begin = getDate(l_managedCursor.getLong(l_colBegin));
+
+                //l_end = getDate(l_managedCursor.getLong(l_colEnd));
+
+                EventItem n = new EventItem();
+                n.setTitle(l_title);
+                n.setDtStart(l_managedCursor.getLong(l_colBegin));
+                n.setDtEnd(l_managedCursor.getLong(l_colEnd));
+                res.add(n);
+
+
+            } while (l_managedCursor.moveToNext());
+        }
+        return res;
     }
 
     @Override
@@ -369,6 +450,7 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
         String themonth = date_[1];
         String theyear = date_[2];
         //Toast.makeText(getActivity(),date,Toast.LENGTH_SHORT).show();
+        //list_events.setAdapter(getAdapaterEvent(getEventsOfDay(Integer.parseInt(theday),conv(themonth),Integer.parseInt(theyear))));
         getLastThreeEvents(Integer.parseInt(theday),conv(themonth),Integer.parseInt(theyear));
     }
 
@@ -409,6 +491,22 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
     {
         return new SimpleDateFormat("hh:mm:ss").format(new Date(date));
     }
+
+    private EventCellAdapter getAdapaterEvent(ArrayList <EventItem> list)
+    {
+        EventCellAdapter event = new EventCellAdapter(getActivity(),R.layout.fragment_month_calendar,list) {
+            @Override
+            public void onEntrada(Object entrada, View view) {
+                //TextView texto_superior_entrada = (TextView) view.findViewById(R.id.fecha_evento);
+                //texto_superior_entrada.setText(((EventItem) entrada));
+
+                TextView texto_inferior_entrada = (TextView) view.findViewById(R.id.titulo_evento);
+                texto_inferior_entrada.setText(((EventItem) entrada).getTitle());
+            }
+        };
+        return event;
+    }
+
 }
 
 

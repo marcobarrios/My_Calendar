@@ -10,6 +10,10 @@ public class EventItem {
     private Long dtStart;
     private Long dtEnd;
 
+    private String colorEvent;
+    private Boolean isAllDay;
+
+    public EventItem(){};
     public EventItem (String title, String description,String location,Long dtStart , Long dtEnd)
     {
         this.title = title;
@@ -57,5 +61,21 @@ public class EventItem {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getColorEvent() {
+        return colorEvent;
+    }
+
+    public void setColorEvent(String colorEvent) {
+        this.colorEvent = colorEvent;
+    }
+
+    public Boolean getIsAllDay() {
+        return isAllDay;
+    }
+
+    public void setIsAllDay(Boolean isAllDay) {
+        this.isAllDay = isAllDay;
     }
 }
