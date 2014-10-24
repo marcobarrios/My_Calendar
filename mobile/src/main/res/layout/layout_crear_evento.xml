@@ -11,125 +11,205 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+
+        <ScrollView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/texto_fecha"
-                android:text="Crear Nuevo Evento"
-                android:textStyle="bold"
-                android:textAppearance="@android:style/TextAppearance.Holo.Medium"
-                android:gravity="center"
-                android:paddingTop="20dp"
-                android:layout_gravity="center"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"/>
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:id="@+id/titulo_evento"
-                android:hint="Título del Evento"
-                android:singleLine="true"/>
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="100dp"
-                android:paddingTop="20dp"
-                android:id="@+id/texto_evento"
-                android:hint="Descripción del Evento"
-                android:singleLine="false"/>
+            android:layout_height="fill_parent">
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="25dp"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginTop="10dp">
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:hint="TODO EL DIA"/>
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/texto_titulo"
+                    android:text="Título"
+                    android:textStyle="bold"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+                    android:gravity="left"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="20dp"
+                    android:layout_gravity="center"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"/>
 
-                <Switch
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:id="@+id/es_todo_el_dia"
-                    android:layout_marginLeft="10dp"/>
-            </LinearLayout>
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="15dp"
+                    android:id="@+id/titulo_evento"
+                    android:hint="Título del Evento"
+                    android:singleLine="true"/>
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="20dp"
-                android:hint="DESDE"/>
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/texto_ubicacion"
+                    android:text="Ubicación"
+                    android:textStyle="bold"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+                    android:gravity="left"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="20dp"
+                    android:layout_gravity="center"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"/>
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="15dp"
+                    android:id="@+id/titulo_ubicación"
+                    android:hint="Ubicación Evento"
+                    android:singleLine="true"/>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/texto_descripcion"
+                    android:text="Descripción"
+                    android:textStyle="bold"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+                    android:gravity="left"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="20dp"
+                    android:layout_gravity="center"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"/>
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:id="@+id/texto_evento"
+                    android:hint="Descripción del Evento"
+                    android:singleLine="false"/>
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="20dp"
+                    android:paddingLeft="10dp"
+                    android:hint="General"/>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="25dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:hint="TODO EL DIA"/>
+
+                    <Switch
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:id="@+id/es_todo_el_dia"
+                        android:layout_marginLeft="10dp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="20dp"
+                    android:paddingLeft="10dp"
+                    android:hint="DESDE"/>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/fecha_inicio"
+                        android:text="Fecha de Inicio"
+                        android:background="#33B5E5"
+                        android:textColor="@color/calendario_focused_month"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"/>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tiempo_inicio"
+                        android:background="#33B5E5"
+                        android:textColor="@color/calendario_focused_month"
+                        android:text="Horario Inicio"
+                        android:layout_marginRight="10dp"/>
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="20dp"
+                    android:paddingLeft="10dp"
+                    android:hint="HASTA"/>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/fecha_fin"
+                        android:text="Fecha de Finalización"
+                        android:background="#33B5E5"
+                        android:textColor="@color/calendario_focused_month"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"/>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tiempo_fin"
+                        android:background="#33B5E5"
+                        android:textColor="@color/calendario_focused_month"
+                        android:text="Horario Fin"
+                        android:layout_marginRight="10dp"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="20dp"
+                    android:paddingLeft="10dp"
+                    android:hint="Calendario"/>
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/fecha_inicio"
-                    android:text="Fecha de Inicio"
-                    android:background="@color/calendario_claro"
-                    android:textColor="@color/calendario_focused_month"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="@dimen/view_margin"
+                    android:layout_marginRight="@dimen/view_margin"
+                    android:id="@+id/btn_correo_calendario"
+                    android:background="#33B5E5"
+                    android:text="Correo Calendario"/>
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tiempo_inicio"
-                    android:background="@color/calendario_claro"
-                    android:textColor="@color/calendario_focused_month"
-                    android:text="Horario Inicio"
-                    android:layout_marginRight="10dp"/>
-
-            </LinearLayout>
-
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="20dp"
-                android:hint="HASTA"/>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="20dp"
+                    android:paddingLeft="10dp"
+                    android:hint="Alertas"/>
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/fecha_fin"
-                    android:text="Fecha de Finalización"
-                    android:background="@color/calendario_claro"
-                    android:textColor="@color/calendario_focused_month"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="@dimen/view_margin"
+                    android:layout_marginRight="@dimen/view_margin"
+                    android:background="#33B5E5"
+                    android:id="@+id/btn_alertas"
+                    android:layout_marginBottom="20dp"
+                    android:text="Ninguna"/>
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tiempo_fin"
-                    android:background="@color/calendario_claro"
-                    android:textColor="@color/calendario_focused_month"
-                    android:text="Horario Fin"
-                    android:layout_marginRight="10dp"/>
+
             </LinearLayout>
 
-
-
-
-
-        </LinearLayout>
+        </ScrollView>
 
         <com.faizmalkani.floatingactionbutton.FloatingActionButton
             android:id="@+id/retornar"

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <item type="id" name="tag_first"> </item>
+    <item type="id" name="tag_second"> </item>
+
     <string name="app_name">MyCalendar</string>
     <string name="action_settings">Ajustes</string>
     <string name="save_event">Guardar Evento</string>
@@ -35,7 +38,7 @@
         <item>Septiembre</item>
         <item>Octubre</item>
         <item>Nomviembre</item>
-        <item>Diciempre</item>
+        <item>Diciembre</item>
     </string-array>
 
 </resources>

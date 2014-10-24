@@ -23,7 +23,9 @@ import com.dsoft.mycalendar.Interfaces.OnDateSelected;
 import com.dsoft.mycalendar.R;
 import com.faizmalkani.floatingactionbutton.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import static android.provider.CalendarContract.Calendars;
@@ -337,15 +339,15 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
 
             int l_colBegin = l_managedCursor.getColumnIndex(l_projection[1]);
 
-            int l_colEnd = l_managedCursor.getColumnIndex(l_projection[1]);
+            int l_colEnd = l_managedCursor.getColumnIndex(l_projection[2]);
 
             do {
 
                 l_title = l_managedCursor.getString(l_colTitle);
 
-                l_begin = l_managedCursor.getString(l_colBegin);
+                l_begin = getDate(l_managedCursor.getLong(l_colBegin));
 
-                l_end = l_managedCursor.getString(l_colEnd);
+                l_end = getDate(l_managedCursor.getLong(l_colEnd));
 
                 l_displayText.append(l_title + "\n" + l_begin + "\n" + l_end + "\n----------------\n");
 
@@ -401,6 +403,11 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
         else if (month.equals(months[11]))
             return 11;
         return 0;
+    }
+
+    public String getDate(Long date)
+    {
+        return new SimpleDateFormat("hh:mm:ss").format(new Date(date));
     }
 }
 

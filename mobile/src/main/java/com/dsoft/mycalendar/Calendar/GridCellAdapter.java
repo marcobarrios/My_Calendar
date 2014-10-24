@@ -1,6 +1,11 @@
 package com.dsoft.mycalendar.Calendar;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dsoft.mycalendar.Interfaces.OnDateSelected;
 import com.dsoft.mycalendar.R;
@@ -301,6 +307,7 @@ public class GridCellAdapter extends BaseAdapter implements View.OnClickListener
     public void onClick(View view) {
         String date_month_year = (String) view.getTag();
         //queryCalendar(view);
+        //getAllAccounts();
         gridcell.setActivated(false);
         gridcellCurrent.setActivated(false);
         view.setActivated(true);
@@ -334,15 +341,13 @@ public class GridCellAdapter extends BaseAdapter implements View.OnClickListener
         return currentWeekDay;
     }
 
-    /*public void queryCalendar(View view) {
+    public void queryCalendar(View view) {
         Cursor cur = null;
         ContentResolver cr = context.getContentResolver();
         Uri uri = CalendarContract.Calendars.CONTENT_URI;
-        String selection = "((" + CalendarContract.Calendars.ACCOUNT_NAME + " = ?) AND ("
-                + CalendarContract.Calendars.ACCOUNT_TYPE + " = ?))";
+        String selection = "(" + CalendarContract.Calendars.ACCOUNT_TYPE + " = ?)";
 
-        String[] selectionArgs = new String[] { "ematul.92@gmail.com",
-                "com.google" };
+        String[] selectionArgs = new String[] { "com.google" };
         cur = cr.query(uri, EVENT_PROJECTION, selection, selectionArgs, null);
 
         while (cur.moveToNext()) {
@@ -351,7 +356,22 @@ public class GridCellAdapter extends BaseAdapter implements View.OnClickListener
             Toast.makeText(context, "Calendar " + displayName, Toast.LENGTH_SHORT)
                     .show();
         }
-    }*/
+    }
+
+    /**
+     * Get All Account available in Phone and add into list
+     */
+    private void getAllAccounts() {
+        int counter = 0;
+        final AccountManager accManager = AccountManager
+                .get(context);
+        final Account accounts[] = accManager.getAccountsByType("com.google");
+
+        for (int i = 0; i < accounts.length; i++) {
+            Log.i(tag, "Name " + accounts[i].name + ", Type "
+                    + accounts[i].type);
+        }
+    }
 
 
 
