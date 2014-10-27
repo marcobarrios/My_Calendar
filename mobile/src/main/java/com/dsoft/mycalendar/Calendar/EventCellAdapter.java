@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.dsoft.mycalendar.R;
+
 import java.util.ArrayList;
 
 /**
@@ -30,7 +32,7 @@ public abstract  class EventCellAdapter extends BaseAdapter {
     public View getView(int position, View view, ViewGroup viewGroup) {
         if (view == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = vi.inflate(R_layout_IdView, null);
+            view = vi.inflate(R.layout.item_eventos, null);
         }
         onEntrada (entradas.get(position), view);
         return view;
@@ -38,17 +40,20 @@ public abstract  class EventCellAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        if(entradas!=null)
+        return entradas.size();
+        else
+            return 0;
     }
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return entradas.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     /** Devuelve cada una de las entradas con cada una de las vistas a la que debe de ser asociada

@@ -6,10 +6,11 @@
     android:layout_height="70dp"
     >
 
-    <ImageView
+    <TextView
         android:layout_width="10dp"
         android:layout_height="fill_parent"
-        android:background="@color/acent_button"/>
+        android:id="@+id/color_evento"
+        android:background="@color/common_signin_btn_default_background"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
@@ -27,7 +28,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:id="@+id/titulo_evento"
+            android:id="@+id/titulo_evento_"
             android:text="Titulo"/>
         </LinearLayout>
 
