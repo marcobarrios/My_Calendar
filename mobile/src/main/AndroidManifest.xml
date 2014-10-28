@@ -30,6 +30,16 @@
         </activity>
 
         <activity
+            android:name=".Calendar.ActivityShowEvent"
+            android:label="Mostrar Evento"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar"
+            android:parentActivityName="com.dsoft.mycalendar.MyActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dsoft.mycalendar.MyActivity" />
+        </activity>
+
+        <activity
             android:name=".Notes.ActivityAnotacion"
             android:label="Nueva Anotacion"
             android:theme="@android:style/Theme.Holo.Light.Dialog"

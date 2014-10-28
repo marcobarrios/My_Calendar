@@ -4,9 +4,11 @@ package com.dsoft.mycalendar.Objects;
  * Created by enrique on 19/10/14.
  */
 public class EventItem {
+    private Long idEvent;
     private String title;
     private String description;
     private String location;
+    private String calendar;
     private Long dtStart;
     private Long dtEnd;
 
@@ -14,10 +16,11 @@ public class EventItem {
     private Boolean isAllDay;
 
     public EventItem(){};
-    public EventItem (String title, String description,String location,Long dtStart , Long dtEnd)
+    public EventItem(String title, String description, String location, String calendar, Long dtStart, Long dtEnd)
     {
         this.title = title;
         this.description = description;
+        this.calendar = calendar;
         this.dtStart = dtStart;
         this.dtEnd = dtEnd;
         this.location = location;
@@ -77,5 +80,21 @@ public class EventItem {
 
     public void setIsAllDay(Boolean isAllDay) {
         this.isAllDay = isAllDay;
+    }
+
+    public Long getIdEvent() {
+        return idEvent;
+    }
+
+    public void setIdEvent(Long idEvent) {
+        this.idEvent = idEvent;
+    }
+
+    public String getCalendar() {
+        return calendar;
+    }
+
+    public void setCalendar(String calendar) {
+        this.calendar = calendar;
     }
 }

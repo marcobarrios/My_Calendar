@@ -25,7 +25,6 @@ public abstract  class EventCellAdapter extends BaseAdapter {
         this.context = context;
         this.R_layout_IdView = R_layout_IdView;
         this.entradas = entradas;
-
     }
 
     @Override
@@ -61,6 +60,4 @@ public abstract  class EventCellAdapter extends BaseAdapter {
      * @param view View particular que contendrá los datos del paquete/handler
      */
     public abstract void onEntrada (Object entrada, View view);
-
-
 }

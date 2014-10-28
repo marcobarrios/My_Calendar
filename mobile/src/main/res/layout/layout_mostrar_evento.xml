@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="60sp"
+            android:background="#3f51b5"
+            android:gravity="left|top"
+            android:height="40sp"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/mv_prevMonth"
+                android:layout_width="20sp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10sp"
+                android:src="@drawable/calendar_left_arrow_selector" >
+            </ImageView>
+
+            <TextView
+                android:id="@+id/mv_currentMonth"
+                android:layout_width="fill_parent"
+                android:layout_height="60sp"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FFFFFF" >
+            </TextView>
+
+            <ImageView
+                android:id="@+id/mv_nextMonth"
+                android:layout_width="20sp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_marginRight="10sp"
+                android:src="@android:drawable/ic_menu_delete" >
+            </ImageView>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/view_margin"
+                    android:paddingRight="@dimen/view_margin"
+                    android:paddingTop="30dp"
+                    android:paddingBottom="@dimen/view_margin"
+                    android:background="#3f51b5"
+                    android:textColor="@color/white"
+                    android:textSize="30dp"
+                    android:id="@+id/me_titulo_evento"
+                    android:text="TITULO DEL EVENTO"/>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/view_margin"
+                    android:paddingRight="@dimen/view_margin"
+                    android:paddingTop="@dimen/view_margin"
+                    android:paddingBottom="@dimen/view_margin"
+                    android:background="#3f51b5"
+                    android:textColor="@color/white"
+                    android:id="@+id/me_fecha_evento"
+                    android:text="Fecha evento"/>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ab_solid_mycalendar"/>
+
+                <com.faizmalkani.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_editar"
+                    app:color="#e91e63"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginTop="-36dp"
+                    android:layout_marginRight="8dp" />
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-20dp"
+                    android:paddingLeft="@dimen/view_margin"
+                    android:paddingRight="@dimen/view_margin"
+                    android:paddingTop="@dimen/view_margin"
+                    android:paddingBottom="@dimen/view_margin"
+                    android:text="General"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:text="Calendario : "/>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/mv_correo_calendario"
+                        android:text="ejemplo@gmail.com"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="@dimen/view_margin"
+                    android:paddingRight="@dimen/view_margin"
+                    android:text="Alertas"/>
+
+                <ListView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:id="@+id/me_lista_alertas">
+                </ListView>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+</LinearLayout>

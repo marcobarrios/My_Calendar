@@ -6,9 +6,6 @@ import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DialogFragment;
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,7 +28,6 @@ import com.dsoft.mycalendar.Objects.EventItem;
 import com.dsoft.mycalendar.R;
 import com.faizmalkani.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -55,8 +51,11 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
     Boolean fly_btn_date;
     Boolean fly_btn_time;
 
+    Boolean is_edition;
+    Long idEvent;
 
     private static final int OK_RESULT_CODE = 1;
+    protected static final int REQUEST_CODE = 10;
     private static final Uri EVENT_URI = CalendarContract.Events.CONTENT_URI;
 
     @Override
@@ -88,8 +87,18 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
             @Override
             public void onClick(View view) {
                 EventItem event = getEvent();
-                addEvent(getApplicationContext(), event.getTitle(),event.getDescription(),"",event.getDtStart(),event.getDtEnd());
+                if(!is_edition) {
+                    QuerysCalendar.addEvent(getApplicationContext(), (String) btn_mail_calendar.getTag(), event.getTitle(),
+                            event.getDescription(), "", event.getDtStart(), event.getDtEnd());
+
+                }else
+                {
+                    //Query Edición
+                    QuerysCalendar.updateEvent(getApplicationContext(), (String) btn_mail_calendar.getTag(),idEvent, event.getTitle(),
+                            event.getDescription(), "", event.getDtStart(), event.getDtEnd());
+                }
                 returnParams();
+
             }
         });
 
@@ -153,23 +162,30 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
                 if (b) {
                     btn_start_time.setEnabled(false);
                     btn_end_time.setEnabled(false);
-                    men("Activado");
                 } else {
                     btn_start_time.setEnabled(true);
                     btn_end_time.setEnabled(true);
-                    men("Desactivado");
                 }
             }
         });
 
         edt_title = (EditText) findViewById(R.id.titulo_evento);
         edt_description = (EditText) findViewById(R.id.texto_evento);
-        iniciarPlantilla();
-    }
 
+        Bundle reicieveParams = getIntent().getExtras();
 
-    public void men(String m) {
-        Toast.makeText(this, m, Toast.LENGTH_SHORT).show();
+        Long idEvent = reicieveParams.getLong("idEvent");
+        String account_calendar = reicieveParams.getString("calendar");
+        if(idEvent!=null)
+        {
+            initEdition(account_calendar,idEvent);
+            this.idEvent = idEvent;
+            is_edition = true;
+        }
+        else {
+            iniciarPlantilla();
+            is_edition = false;
+        }
     }
 
     @TargetApi(19)
@@ -189,36 +205,38 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
         Intent intent = new Intent();
         intent.putExtra("result", "Evento Guardado");
         setResult(OK_RESULT_CODE, intent);
+
         finish();
     }
 
-    /*
-        Get Date Selected into DatePickerDialog
+
+
+    /**
+     * Get Date Selected into DatePickerDialog
+     * @param date String format yyy-mm-dd
      */
     @Override
     public void onDateSelected(String date) {
-        ////Retorno de la fecha
         String data_month_day []= date.split("-");
         String list_months [] = getResources().getStringArray(R.array.months_of_year);
-
-
 
         if(fly_btn_date) {
             btn_start_date.setText(data_month_day[2].concat(" de ").concat(list_months[Integer.parseInt(data_month_day[1]) - 1]));
             btn_start_date.setTag(R.id.tag_first,Integer.parseInt(data_month_day[1]) - 1);
             btn_start_date.setTag(R.id.tag_second,Integer.parseInt(data_month_day[2]));
-            btn_end_date.setText(new String(data_month_day[2]).concat(" de ").concat(list_months[Integer.parseInt(data_month_day[1]) - 1]));
+            btn_end_date.setText((data_month_day[2]).concat(" de ").concat(list_months[Integer.parseInt(data_month_day[1]) - 1]));
             btn_end_date.setTag(R.id.tag_first,Integer.parseInt(data_month_day[1]) - 1);
             btn_end_date.setTag(R.id.tag_second,Integer.parseInt(data_month_day[2]));
         }else {
-            btn_end_date.setText(new String(data_month_day[2]).concat(" de ").concat(list_months[Integer.parseInt(data_month_day[1]) - 1]));
+            btn_end_date.setText((data_month_day[2]).concat(" de ").concat(list_months[Integer.parseInt(data_month_day[1]) - 1]));
             btn_end_date.setTag(R.id.tag_first,Integer.parseInt(data_month_day[1]) - 1);
             btn_end_date.setTag(R.id.tag_second,Integer.parseInt(data_month_day[2]));
         }
     }
 
-    /*
-        Get Time Selected into timePickerDialog
+    /**
+     * Get Time Selected into timePickerDialog
+     * @param time String format HH:MM
      */
     @Override
     public void onTimeSelected(String time) {
@@ -242,13 +260,16 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
 
     }
 
+    /**
+     * set values All initial fields of Layout Activity Event
+     */
     public void iniciarPlantilla()
     {
-        int month = 0;
-        int day = 0;
-        int hour = 0;
+        int month;
+        int day;
+        int hour;
         String minute = "0";
-        String list_months [] = null;
+        String list_months [];
 
         Calendar calendar = Calendar.getInstance();
         day=calendar.get(Calendar.DAY_OF_MONTH);
@@ -258,19 +279,19 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
         hour = time.hour;
         list_months = getResources().getStringArray(R.array.months_of_year);
 
-        btn_start_date.setText(new String(String.valueOf(day)).concat(" de ").concat(list_months[month]) );
+        btn_start_date.setText((String.valueOf(day)).concat(" de ").concat(list_months[month]) );
         btn_start_date.setTag(R.id.tag_first,month);
         btn_start_date.setTag(R.id.tag_second,day);
 
-        btn_end_date.setText(new String(String.valueOf(day)).concat(" de ").concat(list_months[month]) );
+        btn_end_date.setText((String.valueOf(day)).concat(" de ").concat(list_months[month]) );
         btn_end_date.setTag(R.id.tag_first, month);
         btn_end_date.setTag(R.id.tag_second,day);
 
 
-        btn_start_time.setText(new String(String.valueOf(hour)).concat(" : ").concat(minute));
+        btn_start_time.setText((String.valueOf(hour)).concat(" : ").concat(minute));
         btn_start_time.setTag(R.id.tag_first,hour);
         btn_start_time.setTag(R.id.tag_second,Integer.parseInt(minute));
-        btn_end_time.setText(new String(String.valueOf(hour)).concat(" : ").concat(minute));
+        btn_end_time.setText((String.valueOf(hour)).concat(" : ").concat(minute));
         btn_end_time.setTag(R.id.tag_first,hour);
         btn_end_time.setTag(R.id.tag_second,Integer.parseInt(minute));
 
@@ -278,39 +299,62 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
         btn_mail_calendar.setTag(getAccounts());
     }
 
-    /**Create event - Add an event to our calendar
-     * @param dtstart Event start time (in millis)
-     * @param dtend Event end time (in millis)
+    public void initEdition(String calendar,Long idEvent)
+    {
+        EventItem event = QuerysCalendar.getEventByID(getApplicationContext(),calendar,idEvent);
+
+        EditText txtTitle = (EditText) findViewById(R.id.titulo_evento);
+        txtTitle.setText(event.getTitle());
+
+        EditText txtUbication = (EditText) findViewById(R.id.titulo_ubicación);
+        txtUbication.setText(event.getLocation());
+
+        EditText txtDescription = (EditText) findViewById(R.id.texto_evento);
+        txtDescription.setText(event.getDescription());
+
+
+        Time t = new Time();
+        t.set(event.getDtStart());
+        int month = t.month;
+        int day = t.monthDay;
+        int hour = t.hour;
+        int minute = t.minute;
+        String list_months [] = getResources().getStringArray(R.array.months_of_year);
+
+        btn_start_date.setText((String.valueOf(day)).concat(" de ").concat(list_months[month]) );
+        btn_start_date.setTag(R.id.tag_first,month);
+        btn_start_date.setTag(R.id.tag_second,day);
+        btn_start_time.setText((String.valueOf(hour)).concat(" : ").concat(String.valueOf(minute)));
+        btn_start_time.setTag(R.id.tag_first,hour);
+        btn_start_time.setTag(R.id.tag_second,minute);
+
+        t.set(event.getDtEnd());
+        month = t.month;
+        day = t.monthDay;
+        hour = t.hour;
+        minute = t.minute;
+        btn_end_date.setText((String.valueOf(day)).concat(" de ").concat(list_months[month]) );
+        btn_end_date.setTag(R.id.tag_first, month);
+        btn_end_date.setTag(R.id.tag_second,day);
+        btn_end_time.setText((String.valueOf(hour)).concat(" : ").concat(String.valueOf(minute)));
+        btn_end_time.setTag(R.id.tag_first,hour);
+        btn_end_time.setTag(R.id.tag_second,minute);
+
+        btn_mail_calendar.setText(event.getCalendar());
+        btn_mail_calendar.setTag(event.getCalendar());
+
+
+    }
+
+
+    /**
+     * Get ItemEvent with all fields
+     * @return Event to saving
      */
-    public void addEvent(Context ctx, String title, String description, String location,
-                                long dtstart, long dtend) {
-        ContentResolver cr = ctx.getContentResolver();
-        ContentValues cv = new ContentValues();
-        cv.put(CalendarContract.Events.CALENDAR_ID, 1);
-        cv.put(CalendarContract.Events.TITLE, title);
-        cv.put(CalendarContract.Events.DTSTART, dtstart);
-        cv.put(CalendarContract.Events.DTEND, dtend);
-        cv.put(CalendarContract.Events.EVENT_LOCATION, location);
-        cv.put(CalendarContract.Events.DESCRIPTION, description);
-        cv.put(CalendarContract.Events.EVENT_TIMEZONE, "America/Guatemala");
-        cr.insert(buildEventUri(), cv);
-    }
-
-    /**Builds the Uri for events (as a Sync Adapter)*/
-    private Uri buildEventUri() {
-        return EVENT_URI
-                .buildUpon()
-                .appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "true")
-                .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_NAME, (String) btn_mail_calendar.getTag())
-                .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_TYPE,
-                        CalendarContract.ACCOUNT_TYPE_LOCAL)
-                .build();
-    }
-
     private EventItem getEvent()
     {
-        long startMillis = 0;
-        long endMillis = 0;
+        long startMillis;
+        long endMillis;
 
         Calendar beginTime = Calendar.getInstance();
         beginTime.set(2014, (Integer)btn_start_date.getTag(R.id.tag_first), (Integer)btn_start_date.getTag(R.id.tag_second), (Integer)btn_start_time.getTag(R.id.tag_first), (Integer)btn_start_time.getTag(R.id.tag_second));
@@ -318,23 +362,20 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
         Calendar endTime = Calendar.getInstance();
         endTime.set(2014,(Integer)btn_end_date.getTag(R.id.tag_first), (Integer)btn_end_date.getTag(R.id.tag_second), (Integer)btn_end_time.getTag(R.id.tag_first), (Integer)btn_end_time.getTag(R.id.tag_second));
         endMillis = endTime.getTimeInMillis();
-        return new EventItem(edt_title.getText().toString(),edt_description.getText().toString(),"Guatemala",startMillis,endMillis);
+        return new EventItem(edt_title.getText().toString(),edt_description.getText().toString(),"Guatemala", (String)btn_mail_calendar.getTag(), startMillis,endMillis);
     }
 
     /**
      * Get All Account available in Phone and add into list
      */
     private String getAccounts() {
-        int counter = 0;
         final AccountManager accManager = AccountManager
                 .get(this);
         final Account accounts[] = accManager.getAccountsByType("com.google");
         String temporal = accounts[0].name;
-        for (int i = 0; i < accounts.length; i++) {
-            Toast.makeText(this, "Name " + accounts[i].name,Toast.LENGTH_SHORT).show();
+        for (Account account : accounts) {
+            Toast.makeText(this, "Name " + account.name, Toast.LENGTH_SHORT).show();
         }
         return temporal;
     }
-
-
 }

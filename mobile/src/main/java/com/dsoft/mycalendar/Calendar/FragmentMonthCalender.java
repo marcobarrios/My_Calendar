@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -55,6 +56,9 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
     @SuppressLint({ "NewApi", "NewApi", "NewApi", "NewApi" })
     private final DateFormat dateFormatter = new DateFormat();
     private static final String dateTemplate = "MMMM yyyy";
+    private final String[] months = { "January", "February", "March",
+            "April", "May", "June", "July", "August", "September",
+            "October", "November", "December" };
 
     String[] EVENT_PROJECTION = new String[]{CalendarContract.Events.TITLE,
             CalendarContract.Events.EVENT_LOCATION, CalendarContract.Instances.BEGIN,
@@ -65,7 +69,7 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         v = inflater.inflate(R.layout.fragment_month_calendar, container, false);
-        inicializarButon();
+        initButtonFAB();
         //Se crea una Instancia de Calendar para obtener el mes y dia actual.
         _calendar = Calendar.getInstance(Locale.getDefault());
         month = _calendar.get(Calendar.MONTH) + 1;
@@ -95,23 +99,18 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
         calendarView.setAdapter(adapter);
 
         list_events = (ListView) v.findViewById(R.id.list_events);
-        setAdapaterEventList(getEventsOfDay(_calendar.get(Calendar.DAY_OF_MONTH), month - 1, year));
-
-
-        //getLastThreeEvents(_calendar.get(Calendar.DAY_OF_MONTH), month - 1, year);
-        return v;
-    }
-
-    public void inicializarButon() {
-        btnNewEvent = (FloatingActionButton)v.findViewById(R.id.fab_calendario);
-        btnNewEvent.setOnClickListener(new View.OnClickListener() {
+        setAdapterEventList(QuerysCalendar.getEventsOfDay(getActivity().getApplicationContext(),_calendar.get(Calendar.DAY_OF_MONTH), month - 1, year));
+        list_events.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getActivity().getApplicationContext(), ActivityEvento.class);
-                //i.putExtra("fecha", String.valueOf(calendario.getDate()));
+            public void onItemClick(AdapterView<?> listEvents, View view, int position, long id) {
+                EventItem eventSelected = (EventItem) listEvents.getItemAtPosition(position);
+                Intent i = new Intent(getActivity().getApplicationContext(), ActivityShowEvent.class);
+                i.putExtra("idEvent",eventSelected.getIdEvent());
+                i.putExtra("calendario", eventSelected.getCalendar());
                 startActivityForResult(i, REQUEST_CODE);
             }
         });
+        return v;
     }
 
     @Override
@@ -125,46 +124,6 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
         }catch(Exception exp) {
 
         }
-    }
-
-    /**
-     *
-     * @param month
-     * @param year
-     */
-    private void setGridCellAdapterToDate(int month, int year) {
-        adapter = new GridCellAdapter(getActivity().getApplicationContext(),
-                R.id.calendar_day_gridcell, month, year,this);
-        int aux = month - 1;
-        _calendar.set(year,aux, _calendar.get(Calendar.DAY_OF_MONTH));
-        currentMonth.setText(DateFormat.format(dateTemplate,
-                _calendar.getTime()));
-        adapter.notifyDataSetChanged();
-        calendarView.setAdapter(adapter);
-
-    }
-
-    private void setAdapaterEventList(ArrayList <EventItem> list)
-    {
-        EventCellAdapter event = new EventCellAdapter(getActivity().getApplicationContext(),R.layout.item_eventos,list) {
-            @Override
-            public void onEntrada(Object entrada, View view) {
-
-                String l_begin;
-                String l_end;
-
-                l_begin = getDate(((EventItem) entrada).getDtStart());
-                l_end = getDate(((EventItem) entrada).getDtEnd());
-                StringBuilder l_displayText = new StringBuilder();
-                l_displayText.append(l_begin +" -" +l_end);
-                TextView texto_superior_entrada = (TextView) view.findViewById(R.id.fecha_evento);
-                texto_superior_entrada.setText(l_displayText);
-
-                TextView texto_inferior_entrada = (TextView) view.findViewById(R.id.titulo_evento_);
-                texto_inferior_entrada.setText(((EventItem) entrada).getTitle());
-            }
-        };
-        list_events.setAdapter(event);
     }
 
     @Override
@@ -181,7 +140,7 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
             setGridCellAdapterToDate(month, year);
             Time time = new Time();
             time.setToNow();
-            setAdapaterEventList(getEventsOfDay(time.monthDay, month - 1, year));
+            setAdapterEventList(QuerysCalendar.getEventsOfDay(getActivity().getApplicationContext(),time.monthDay, month - 1, year));
             //getLastThreeEvents(time.monthDay, month - 1, year);
 
             //CalendarService.readCalendar(getActivity().getApplicationContext());
@@ -198,16 +157,116 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
             setGridCellAdapterToDate(month, year);
             Time time = new Time();
             time.setToNow();
-            setAdapaterEventList(getEventsOfDay(time.monthDay, month - 1, year));
+            setAdapterEventList(QuerysCalendar.getEventsOfDay(getActivity().getApplicationContext(),time.monthDay, month - 1, year));
             //getLastThreeEvents(time.monthDay,month - 1,year);
         }
-
     }
 
+    /**
+     * get Date selected into Calendar
+     * @param date date format (YYY-MM-DD)
+     */
     @Override
-    public void onDestroy() {
-        Log.d(getTag(), "Destroying View ...");
-        super.onDestroy();
+    public void onDateSelected(String date) {
+
+        String[] date_ = date.split("-");
+        String theday = date_[0];
+        String themonth = date_[1];
+        String theyear = date_[2];
+        //Toast.makeText(getActivity(),date,Toast.LENGTH_SHORT).show();
+        //list_events.setAdapter(getAdapaterEvent(getEventsOfDay(Integer.parseInt(theday),getMonthNumber(themonth),Integer.parseInt(theyear))));
+        setAdapterEventList(QuerysCalendar.getEventsOfDay(getActivity().getApplicationContext(),Integer.parseInt(theday), getMonthNumber(themonth), Integer.parseInt(theyear)));
+        //getLastThreeEvents(Integer.parseInt(theday),getMonthNumber(themonth),Integer.parseInt(theyear));
+    }
+
+    /**
+     * set Adapter to Calendars
+     * @param month On Date Selected (1-12)
+     * @param year On Date Selected (1-12)
+     */
+    private void setGridCellAdapterToDate(int month, int year) {
+        adapter = new GridCellAdapter(getActivity().getApplicationContext(),
+                R.id.calendar_day_gridcell, month, year,this);
+        int aux = month - 1;
+        _calendar.set(year,aux, _calendar.get(Calendar.DAY_OF_MONTH));
+        currentMonth.setText(DateFormat.format(dateTemplate,
+                _calendar.getTime()));
+        adapter.notifyDataSetChanged();
+        calendarView.setAdapter(adapter);
+    }
+
+    /**
+     * set Adapter Event List
+     * @param list event list of Day
+     */
+
+    private void setAdapterEventList(ArrayList<EventItem> list)
+    {
+        EventCellAdapter event = new EventCellAdapter(getActivity().getApplicationContext(),R.layout.item_eventos,list) {
+            @Override
+            public void onEntrada(Object entrada, View view) {
+
+                String l_begin;
+                String l_end;
+
+                l_begin = getDate(((EventItem) entrada).getDtStart());
+                l_end = getDate(((EventItem) entrada).getDtEnd());
+                StringBuilder l_displayText = new StringBuilder();
+                l_displayText.append(l_begin).append(" - ").append(l_end);
+                TextView texto_superior_entrada = (TextView) view.findViewById(R.id.fecha_evento);
+                texto_superior_entrada.setText(l_displayText);
+
+                TextView texto_inferior_entrada = (TextView) view.findViewById(R.id.titulo_evento_);
+                texto_inferior_entrada.setText(((EventItem) entrada).getTitle());
+            }
+        };
+        list_events.setAdapter(event);
+    }
+
+    public int getMonthNumber(String month)
+    {
+        if(month.equals(months[0]))
+              return Calendar.JANUARY;
+        else if(month.equals(months[1]))
+            return Calendar.FEBRUARY;
+        else if(month.equals(months[2]))
+            return Calendar.MARCH;
+        else if(month.equals(months[3]))
+            return Calendar.APRIL;
+        else if(month.equals(months[4]))
+            return Calendar.MAY;
+        else if(month.equals(months[5]))
+            return Calendar.JUNE;
+        else if(month.equals(months[6]))
+            return Calendar.JULY;
+        else if(month.equals(months[7]))
+            return Calendar.AUGUST;
+        else if(month.equals(months[8]))
+            return Calendar.SEPTEMBER;
+        else if(month.equals(months[9]))
+            return Calendar.OCTOBER;
+        else if(month.equals(months[10]))
+            return Calendar.NOVEMBER;
+        else if (month.equals(months[11]))
+            return Calendar.DECEMBER;
+        return 0;
+    }
+
+    public String getDate(Long date)
+    {
+        return new SimpleDateFormat("hh:mm:ss").format(new Date(date));
+    }
+
+    public void initButtonFAB() {
+        btnNewEvent = (FloatingActionButton)v.findViewById(R.id.fab_calendario);
+        btnNewEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity().getApplicationContext(), ActivityEvento.class);
+                //i.putExtra("fecha", String.valueOf(calendario.getDate()));
+                startActivityForResult(i, REQUEST_CODE);
+            }
+        });
     }
 
     private void conectToCalender()
@@ -329,199 +388,6 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
 
 
     }*/
-
-   private void getLastThreeEvents(int day,int month ,int year ) {
-
-
-       String selection = "((" + CalendarContract.Events.DTSTART
-               + " >= ?) AND (" + CalendarContract.Events.DTEND + " <= ?) " +
-               "OR (" + CalendarContract.Events.RRULE + " is not null ))";
-
-
-       Time t = new Time();
-       t.set(0,0,0,day, month, year);
-       String dtStart = Long.toString(t.toMillis(false));
-       t.set(59, 59, 23, day, month, year);
-       String dtEnd = Long.toString(t.toMillis(false));
-       String[] selectionArgs = new String[] { dtStart, dtEnd };
-
-
-   /*    Uri l_eventUri;
-
-        if (Build.VERSION.SDK_INT >= 8 ) {
-
-            l_eventUri = Uri.parse("content://com.android.calendar/events");
-
-        } else {
-
-            l_eventUri = Uri.parse("content://calendar/events");
-
-        }*/
-
-        String[] l_projection = new String[]{"title", "dtstart", "dtend" ,"event_color"};
-
-        Cursor l_managedCursor = getActivity().managedQuery(CalendarContract.Events.CONTENT_URI,
-                null, selection, selectionArgs, null);
-
-        //Cursor l_managedCursor = this.managedQuery(l_eventUri, l_projection, null, null, null);
-
-        if (l_managedCursor.moveToFirst()) {
-
-            int l_cnt = 0;
-
-            String l_title;
-
-            String l_begin;
-
-            String l_end;
-
-
-
-            StringBuilder l_displayText = new StringBuilder();
-
-            int l_colTitle = l_managedCursor.getColumnIndex(l_projection[0]);
-
-            int l_colBegin = l_managedCursor.getColumnIndex(l_projection[1]);
-
-            int l_colEnd = l_managedCursor.getColumnIndex(l_projection[2]);
-
-            do {
-
-                l_title = l_managedCursor.getString(l_colTitle);
-
-                l_begin = getDate(l_managedCursor.getLong(l_colBegin));
-
-                l_end = getDate(l_managedCursor.getLong(l_colEnd));
-
-                l_displayText.append(l_title + "\n" + l_begin + "\n" + l_end + "\n----------------\n");
-
-                ++l_cnt;
-
-            } while (l_managedCursor.moveToNext());
-
-            events.setText(l_displayText.toString());
-
-        }else{
-            events.setText("");
-        }
-
-
-
-    }
-
-    private ArrayList <EventItem> getEventsOfDay(int day,int month ,int year ) {
-
-        String selection = "((" + CalendarContract.Events.DTSTART
-                + " >= ?) AND (" + CalendarContract.Events.DTEND + " <= ?) " +
-                "OR (" + CalendarContract.Events.RRULE + " is not null ))";
-
-        Time t = new Time();
-        t.set(0,0,0,day, month, year);
-        String dtStart = Long.toString(t.toMillis(false));
-        t.set(59, 59, 23, day, month, year);
-        String dtEnd = Long.toString(t.toMillis(false));
-        String[] selectionArgs = new String[] { dtStart, dtEnd };
-
-        String[] l_projection = new String[]{"title", "dtstart", "dtend"};
-
-        Cursor l_managedCursor = getActivity().managedQuery(CalendarContract.Events.CONTENT_URI,
-                null, selection, selectionArgs, null);
-
-        ArrayList <EventItem> res = null;
-
-        if (l_managedCursor.moveToFirst()) {
-
-            int l_cnt = 0;
-
-            String l_title;
-
-            String l_begin;
-
-            String l_end;
-
-            res = new ArrayList<EventItem>();
-
-            StringBuilder l_displayText = new StringBuilder();
-
-            int l_colTitle = l_managedCursor.getColumnIndex(l_projection[0]);
-
-            int l_colBegin = l_managedCursor.getColumnIndex(l_projection[1]);
-
-            int l_colEnd = l_managedCursor.getColumnIndex(l_projection[2]);
-
-            //int l_color = l_managedCursor.getColumnIndex(l_projection[3]/);
-
-            do {
-
-                l_title = l_managedCursor.getString(l_colTitle);
-
-                // l_begin = getDate(l_managedCursor.getLong(l_colBegin));
-
-                //l_end = getDate(l_managedCursor.getLong(l_colEnd));
-
-                EventItem n = new EventItem();
-                n.setTitle(l_title);
-                n.setDtStart(l_managedCursor.getLong(l_colBegin));
-                n.setDtEnd(l_managedCursor.getLong(l_colEnd));
-                //n.setColorEvent(l_managedCursor.getString(l_color));
-                res.add(n);
-
-
-            } while (l_managedCursor.moveToNext());
-        }
-        return res;
-    }
-
-    @Override
-    public void onDateSelected(String date) {
-
-        String[] date_ = date.split("-");
-        String theday = date_[0];
-        String themonth = date_[1];
-        String theyear = date_[2];
-        //Toast.makeText(getActivity(),date,Toast.LENGTH_SHORT).show();
-        //list_events.setAdapter(getAdapaterEvent(getEventsOfDay(Integer.parseInt(theday),conv(themonth),Integer.parseInt(theyear))));
-        setAdapaterEventList(getEventsOfDay(Integer.parseInt(theday),conv(themonth),Integer.parseInt(theyear)));
-        //getLastThreeEvents(Integer.parseInt(theday),conv(themonth),Integer.parseInt(theyear));
-    }
-
-    private final String[] months = { "January", "February", "March",
-            "April", "May", "June", "July", "August", "September",
-            "October", "November", "December" };
-
-    public int conv (String month)
-    {
-        if(month.equals(months[0]))
-              return 0;
-        else if(month.equals(months[1]))
-            return 1;
-        else if(month.equals(months[2]))
-            return 2;
-        else if(month.equals(months[3]))
-            return 3;
-        else if(month.equals(months[4]))
-            return 4;
-        else if(month.equals(months[5]))
-            return 5;
-        else if(month.equals(months[6]))
-            return 6;
-        else if(month.equals(months[7]))
-            return 7;
-        else if(month.equals(months[8]))
-            return 8;
-        else if(month.equals(months[9]))
-            return 9;
-        else if(month.equals(months[10]))
-            return 10;
-        else if (month.equals(months[11]))
-            return 11;
-        return 0;
-    }
-
-    public String getDate(Long date)
-    {
-        return new SimpleDateFormat("hh:mm:ss").format(new Date(date));
-    }
 
 
 
