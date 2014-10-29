@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/button_disabled"
+    android:padding="8dp">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        android:elevation="20dp"
+        android:background="@color/common_signin_btn_dark_text_default">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:paddingLeft="10dp"
+            android:text="Large Text"
+            android:id="@+id/viewTituloAnotacion" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:paddingLeft="15dp"
+            android:text="Medium Text"
+            android:id="@+id/viewDescripcionAnotacion" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:paddingLeft="15dp"
+            android:id="@+id/viewFechaAnotacion" />
+    </LinearLayout>
+</FrameLayout>
