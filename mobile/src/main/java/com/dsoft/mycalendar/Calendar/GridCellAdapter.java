@@ -252,7 +252,7 @@ public class GridCellAdapter extends BaseAdapter implements View.OnClickListener
         }
 
 
-        if(position > 6) {
+
             // Get a reference to the Day gridcell
             gridcell = (Button) row.findViewById(R.id.calendar_day_gridcell);
             gridcell.setOnClickListener(this);
@@ -293,12 +293,7 @@ public class GridCellAdapter extends BaseAdapter implements View.OnClickListener
                 gridcellCurrent = gridcell;
             }
 
-        }
-        else
-        {
-            gridcell = (Button) row.findViewById(R.id.calendar_day_gridcell);
-            gridcell.setText(weekdays[position]);
-        }
+
 
         return row;
     }

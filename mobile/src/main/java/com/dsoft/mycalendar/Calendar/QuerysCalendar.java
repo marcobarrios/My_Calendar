@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract;
 import android.text.format.Time;
+import android.util.Log;
 
 import com.dsoft.mycalendar.Objects.EventItem;
 
@@ -111,14 +112,18 @@ public class QuerysCalendar {
 
     }
 
+    private static final String DEBUG_TAG = "MyActivity";
     /**Delete event - Delete an event to our calendar
      */
     public static void deleteEvent(Context ctx, Long id)
     {
+
         ContentResolver cr = ctx.getContentResolver();
-        String selection = "("+ CalendarContract.Events._ID+" = ?)";
-        String[] selectionArgs = new String[] {String.valueOf(id)};
-        cr.delete(CalendarContract.Events.CONTENT_URI, selection, selectionArgs);
+        ContentValues values = new ContentValues();
+        Uri deleteUri = null;
+        deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, id);
+        int rows = ctx.getContentResolver().delete(deleteUri, null, null);
+        Log.i(DEBUG_TAG, "Rows deleted: " + rows);
     }
 
     public static ArrayList<EventItem> getEventsOfDay(Context context,int day,int month ,int year ) {

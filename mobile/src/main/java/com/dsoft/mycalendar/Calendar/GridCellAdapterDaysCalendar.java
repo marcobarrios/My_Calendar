@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
+import android.widget.Button;
 
 import com.dsoft.mycalendar.R;
 
@@ -14,10 +14,10 @@ import com.dsoft.mycalendar.R;
  */
 public class GridCellAdapterDaysCalendar extends BaseAdapter {
 
-    private final String[] weekdays = new String[] { "Sun", "Mon", "Tue",
-            "Wed", "Thu", "Fri", "Sat" };
+    private final String[] weekdays = new String[] { "Dom", "Lun", "Mar",
+            "Mie", "Jue", "Vie", "Sab" };
     private Context contextParent;
-    private TextView gridcell;
+    private Button gridcell;
 
     public GridCellAdapterDaysCalendar(Context c)
     {
@@ -27,12 +27,12 @@ public class GridCellAdapterDaysCalendar extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return weekdays.length;
     }
 
     @Override
     public Object getItem(int i) {
-        return i;
+        return weekdays[i];
     }
 
     @Override
@@ -49,12 +49,12 @@ public class GridCellAdapterDaysCalendar extends BaseAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(R.layout.screen_gridcell_days, parent, false);
         }
-        gridcell = (TextView) row.findViewById(R.id.num_day);
+        gridcell = (Button) row.findViewById(R.id.num_day);
 
         String day = weekdays[i];
 
         gridcell.setText(day);
-        gridcell.setTextColor(contextParent.getResources().getColor(R.color.orrange));
+        //gridcell.setTextColor(contextParent.getResources().getColor(R.color.orrange));
 
 
         return row;

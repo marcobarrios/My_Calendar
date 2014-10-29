@@ -2,15 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/ab_solid_mycalendar"
     android:orientation="vertical" >
 
-    <TextView
+    <Button
         android:id="@+id/num_day"
-        style="@style/calendar_event_style"
-        android:layout_width="10dip"
-        android:layout_height="10dip"
-        android:layout_gravity="right" >
-    </TextView>
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:background="@drawable/calendar_botton_default"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#ffffff">
+    </Button>
+
 
 </RelativeLayout>

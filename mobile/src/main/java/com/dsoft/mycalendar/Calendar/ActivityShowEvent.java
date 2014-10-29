@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +20,10 @@ import java.util.Date;
  */
 public class ActivityShowEvent extends Activity {
 
-    FloatingActionButton btn_edit_event;
+    private FloatingActionButton btn_edit_event;
+    private ImageView btn_return_principal;
+    private ImageView btn_delete_event;
+
     protected static final int REQUEST_CODE = 10;
 
     @Override
@@ -44,6 +48,24 @@ public class ActivityShowEvent extends Activity {
                 i.putExtra("idEvent",idEvent);
                 i.putExtra("calendar",calendario);
                 startActivityForResult(i, REQUEST_CODE);
+            }
+        });
+
+        btn_return_principal = (ImageView) findViewById(R.id.me_return);
+        btn_return_principal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+
+            }
+        });
+
+        btn_delete_event = (ImageView) findViewById(R.id.me_delete_event);
+        btn_delete_event.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                QuerysCalendar.deleteEvent(getApplicationContext(),idEvent);
+                finish();
             }
         });
 
