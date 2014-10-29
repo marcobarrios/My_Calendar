@@ -96,7 +96,7 @@ public class QuerysCalendar {
 
     /**Update event - Update an event to our calendar
      */
-    public static void updateEvent(Context ctx, String calendar_mail, Long id,String title, String description,
+    public static Long updateEvent(Context ctx, String calendar_mail, Long id,String title, String description,
                                 String location,long dtStart, long dtEnd)
     {
         ContentValues cv = new ContentValues();
@@ -110,9 +110,11 @@ public class QuerysCalendar {
         Uri updateUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, id);
         ctx.getContentResolver().update(updateUri, cv, null, null);
 
+        return Long.parseLong(updateUri.getLastPathSegment());
     }
 
     private static final String DEBUG_TAG = "MyActivity";
+
     /**Delete event - Delete an event to our calendar
      */
     public static void deleteEvent(Context ctx, Long id)
@@ -124,6 +126,16 @@ public class QuerysCalendar {
         deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, id);
         int rows = ctx.getContentResolver().delete(deleteUri, null, null);
         Log.i(DEBUG_TAG, "Rows deleted: " + rows);
+    }
+
+    public static void addReminderEvent(Context ctx, Long id, int minutes)
+    {
+        ContentResolver cr = ctx.getContentResolver();
+        ContentValues values = new ContentValues();
+        values.put(CalendarContract.Reminders.MINUTES, minutes);
+        values.put(CalendarContract.Reminders.EVENT_ID, id);
+        values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
+        Uri uri = cr.insert(CalendarContract.Reminders.CONTENT_URI, values);
     }
 
     public static ArrayList<EventItem> getEventsOfDay(Context context,int day,int month ,int year ) {

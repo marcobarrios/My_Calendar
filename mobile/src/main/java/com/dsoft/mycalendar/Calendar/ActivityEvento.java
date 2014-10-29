@@ -41,6 +41,7 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
     Button btn_start_time;
     Button btn_end_time;
     Button btn_mail_calendar;
+    Button btn_alertar;
     Switch swt_is_all_day;
 
     EditText edt_title;
@@ -48,6 +49,7 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
 
     Boolean fly_btn_date;
     Boolean fly_btn_time;
+    Boolean fly_btn_alerta;
 
     Boolean is_edition;
     Long idEvent;
@@ -64,6 +66,7 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
 
         fly_btn_date = true;
         fly_btn_time = true;
+        fly_btn_alerta = false;
 
        /* if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
@@ -83,15 +86,21 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
             @Override
             public void onClick(View view) {
                 EventItem event = getEvent();
+                long id;
                 if(!is_edition) {
-                    QuerysCalendar.addEvent(getApplicationContext(), (String) btn_mail_calendar.getTag(), event.getTitle(),
+                    id = QuerysCalendar.addEvent(getApplicationContext(), (String) btn_mail_calendar.getTag(), event.getTitle(),
                             event.getDescription(), "", event.getDtStart(), event.getDtEnd());
 
                 }else
                 {
                     //Query Edición
-                    QuerysCalendar.updateEvent(getApplicationContext(), (String) btn_mail_calendar.getTag(), idEvent, event.getTitle(),
+                    id = QuerysCalendar.updateEvent(getApplicationContext(), (String) btn_mail_calendar.getTag(), idEvent, event.getTitle(),
                             event.getDescription(), "", event.getDtStart(), event.getDtEnd());
+                }
+
+                if(fly_btn_alerta)
+                {
+                    QuerysCalendar.addReminderEvent(getApplicationContext(),id, (Integer)btn_alertar.getTag());
                 }
                 returnParams();
 
@@ -158,6 +167,24 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
             }
         });
 
+        btn_alertar = (Button) findViewById(R.id.btn_alertas);
+        btn_alertar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(fly_btn_alerta)
+                {
+                    btn_alertar.setText("Ninguna");
+                    btn_alertar.setTag(0);
+                    fly_btn_alerta = false;
+                }
+                else
+                {
+                    btn_alertar.setText("10 minutos");
+                    btn_alertar.setTag(10);
+                    fly_btn_alerta = true;
+                }
+            }
+        });
 
         swt_is_all_day = (Switch) findViewById(R.id.es_todo_el_dia);
         swt_is_all_day.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
