@@ -7,9 +7,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.text.format.Time;
 import android.view.View;
 import android.view.Window;
@@ -28,14 +26,14 @@ import com.dsoft.mycalendar.Objects.EventItem;
 import com.dsoft.mycalendar.R;
 import com.faizmalkani.floatingactionbutton.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Marco Barrios on 12/10/2014.
  */
 public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSelected {
-
-    private ActionBar supportActionBar;
 
     FloatingActionButton btn_save_event;
     Button btn_start_date;
@@ -55,8 +53,6 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
     Long idEvent;
 
     private static final int OK_RESULT_CODE = 1;
-    protected static final int REQUEST_CODE = 10;
-    private static final Uri EVENT_URI = CalendarContract.Events.CONTENT_URI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +90,7 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
                 }else
                 {
                     //Query Edición
-                    QuerysCalendar.updateEvent(getApplicationContext(), (String) btn_mail_calendar.getTag(),idEvent, event.getTitle(),
+                    QuerysCalendar.updateEvent(getApplicationContext(), (String) btn_mail_calendar.getTag(), idEvent, event.getTitle(),
                             event.getDescription(), "", event.getDtStart(), event.getDtEnd());
                 }
                 returnParams();
@@ -131,6 +127,10 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
             public void onClick(View view) {
                 fly_btn_time = true;
                 DialogFragment newFragment = new TimePickerFragment();
+                Bundle params = new Bundle();
+                params.putInt("hour",0);
+                params.putInt("minute",0);
+                newFragment.setArguments(params);
                 newFragment.show(getFragmentManager(), "timePicker");
             }
         });
@@ -140,6 +140,10 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
             public void onClick(View view) {
                 fly_btn_time = false;
                 DialogFragment newFragment = new TimePickerFragment();
+                Bundle params = new Bundle();
+                params.putInt("hour",0);
+                params.putInt("minute",0);
+                newFragment.setArguments(params);
                 newFragment.show(getFragmentManager(), "timePicker");
             }
         });
@@ -172,10 +176,14 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
         edt_title = (EditText) findViewById(R.id.titulo_evento);
         edt_description = (EditText) findViewById(R.id.texto_evento);
 
+        Long idEvent = null;
+        String account_calendar = null;
         Bundle reicieveParams = getIntent().getExtras();
+        if(reicieveParams!=null) {
+            idEvent = reicieveParams.getLong("idEvent");
+            account_calendar = reicieveParams.getString("calendar");
+        }
 
-        Long idEvent = reicieveParams.getLong("idEvent");
-        String account_calendar = reicieveParams.getString("calendar");
         if(idEvent!=null)
         {
             initEdition(account_calendar,idEvent);
@@ -244,16 +252,19 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
         String data [] = time.split(":");
         int hour = Integer.parseInt(data[0]);
         int minute = Integer.parseInt(data[1]);
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.MINUTE,minute);
+        c.set(Calendar.HOUR_OF_DAY,hour);
 
         if(fly_btn_time) {
-            btn_start_time.setText(time);
+            btn_start_time.setText(getDate(c.getTimeInMillis()));
             btn_start_time.setTag(R.id.tag_first,hour);
             btn_start_time.setTag(R.id.tag_second,minute);
-            btn_end_time.setText(time);
+            btn_end_time.setText(getDate(c.getTimeInMillis()));
             btn_end_time.setTag(R.id.tag_first,hour);
             btn_end_time.setTag(R.id.tag_second,minute);
         }else {
-            btn_end_time.setText(time);
+            btn_end_time.setText(getDate(c.getTimeInMillis()));
             btn_end_time.setTag(R.id.tag_first,hour);
             btn_end_time.setTag(R.id.tag_second,minute);
         }
@@ -261,7 +272,7 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
     }
 
     /**
-     * set values All initial fields of Layout Activity Event
+     * set All values on mode creation of Layout Activity Event
      */
     public void iniciarPlantilla()
     {
@@ -272,10 +283,12 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
         String list_months [];
 
         Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MINUTE,0);
         day=calendar.get(Calendar.DAY_OF_MONTH);
         month=calendar.get(Calendar.MONTH);
         Time time = new Time();
         time.setToNow();
+        time.minute = 0;
         hour = time.hour;
         list_months = getResources().getStringArray(R.array.months_of_year);
 
@@ -288,16 +301,22 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
         btn_end_date.setTag(R.id.tag_second,day);
 
 
-        btn_start_time.setText((String.valueOf(hour)).concat(" : ").concat(minute));
+        btn_start_time.setText(getDate(calendar.getTimeInMillis()));
         btn_start_time.setTag(R.id.tag_first,hour);
         btn_start_time.setTag(R.id.tag_second,Integer.parseInt(minute));
-        btn_end_time.setText((String.valueOf(hour)).concat(" : ").concat(minute));
+        btn_end_time.setText(getDate(calendar.getTimeInMillis()));
         btn_end_time.setTag(R.id.tag_first,hour);
         btn_end_time.setTag(R.id.tag_second,Integer.parseInt(minute));
 
         btn_mail_calendar.setText(getAccounts());
         btn_mail_calendar.setTag(getAccounts());
     }
+
+    /**
+     * set All values on mode edition of Layout Activity Event
+     * @param calendar field of calendar ACCOUNT_NAME
+     * @param idEvent Event ID
+     */
 
     public void initEdition(String calendar,Long idEvent)
     {
@@ -324,7 +343,7 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
         btn_start_date.setText((String.valueOf(day)).concat(" de ").concat(list_months[month]) );
         btn_start_date.setTag(R.id.tag_first,month);
         btn_start_date.setTag(R.id.tag_second,day);
-        btn_start_time.setText((String.valueOf(hour)).concat(" : ").concat(String.valueOf(minute)));
+        btn_start_time.setText(getDate(event.getDtStart()));
         btn_start_time.setTag(R.id.tag_first,hour);
         btn_start_time.setTag(R.id.tag_second,minute);
 
@@ -336,7 +355,7 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
         btn_end_date.setText((String.valueOf(day)).concat(" de ").concat(list_months[month]) );
         btn_end_date.setTag(R.id.tag_first, month);
         btn_end_date.setTag(R.id.tag_second,day);
-        btn_end_time.setText((String.valueOf(hour)).concat(" : ").concat(String.valueOf(minute)));
+        btn_end_time.setText(getDate(event.getDtEnd()));
         btn_end_time.setTag(R.id.tag_first,hour);
         btn_end_time.setTag(R.id.tag_second,minute);
 
@@ -377,5 +396,10 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
             Toast.makeText(this, "Name " + account.name, Toast.LENGTH_SHORT).show();
         }
         return temporal;
+    }
+
+    public String getDate(Long date)
+    {
+        return new SimpleDateFormat("h:mm a").format(new Date(date));
     }
 }

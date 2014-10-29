@@ -7,10 +7,10 @@
     >
 
     <TextView
-        android:layout_width="10dp"
+        android:layout_width="5dp"
         android:layout_height="fill_parent"
         android:id="@+id/color_evento"
-        android:background="@color/common_signin_btn_default_background"/>
+        android:background="@color/sky"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
@@ -21,13 +21,19 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
+            android:paddingLeft="10dp"
+            android:textAppearance="@android:style/TextAppearance.Holo.Small"
+            android:textColor="@color/button_disabled_dark"
             android:id="@+id/fecha_evento"
             android:text="Fecha"/>
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
             android:textStyle="bold"
+            android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+            android:textColor="@color/dark"
             android:id="@+id/titulo_evento_"
             android:text="Titulo"/>
         </LinearLayout>

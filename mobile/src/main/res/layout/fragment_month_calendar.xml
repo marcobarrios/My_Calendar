@@ -10,10 +10,10 @@
     <LinearLayout
         android:id="@+id/buttonlayout"
         android:layout_width="fill_parent"
-        android:layout_height="60sp"
-        android:background="@drawable/ab_solid_mycalendar"
+        android:layout_height="40sp"
+        android:background="#ff343e66"
         android:gravity="left|top"
-        android:height="60sp"
+        android:height="40sp"
         android:orientation="horizontal" >
 
         <ImageView
@@ -28,7 +28,7 @@
         <TextView
             android:id="@+id/currentMonth"
             android:layout_width="fill_parent"
-            android:layout_height="60sp"
+            android:layout_height="40sp"
             android:layout_weight="0.6"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -69,23 +69,18 @@
                 android:numColumns="7" >
             </GridView>
 
+             <TextView
+                 android:id="@+id/dia_seleccionado"
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content"
+                 android:textAppearance="@android:style/TextAppearance.Holo.Medium">
+             </TextView>
+
              <ListView
                  android:layout_width="fill_parent"
                  android:layout_height="wrap_content"
                  android:id="@+id/list_events">
              </ListView>
-
-            <ScrollView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/events"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Eventos">
-                </TextView>
-
-            </ScrollView>
 
          </LinearLayout>
 

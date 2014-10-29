@@ -5,10 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dsoft.mycalendar.Objects.EventItem;
 import com.dsoft.mycalendar.R;
 import com.faizmalkani.floatingactionbutton.FloatingActionButton;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by enrique on 26/10/14.
@@ -16,8 +20,6 @@ import com.faizmalkani.floatingactionbutton.FloatingActionButton;
 public class ActivityShowEvent extends Activity {
 
     FloatingActionButton btn_edit_event;
-    EventItem eventSelected;
-    private String calendario;
     protected static final int REQUEST_CODE = 10;
 
     @Override
@@ -26,11 +28,13 @@ public class ActivityShowEvent extends Activity {
         setContentView(R.layout.layout_mostrar_evento);
 
         Bundle reicieveParams = getIntent().getExtras();
-        calendario = reicieveParams.getString("calendario");
+        final String calendario = reicieveParams.getString("calendario");
         final Long idEvent = reicieveParams.getLong("idEvent");
 
         EventItem eventSelected = QuerysCalendar.getEventByID(getApplicationContext(),
                 calendario,idEvent);
+
+        Toast.makeText(this,"Color:" + eventSelected.getColorEvent(),Toast.LENGTH_SHORT).show();
 
         btn_edit_event = (FloatingActionButton) findViewById(R.id.fab_editar);
         btn_edit_event.setOnClickListener(new View.OnClickListener() {
@@ -48,7 +52,7 @@ public class ActivityShowEvent extends Activity {
             tx_titulo.setText(eventSelected.getTitle());
 
             TextView tx_fecha = (TextView) findViewById(R.id.me_fecha_evento);
-            tx_fecha.setText(eventSelected.getDtStart() + "-" + eventSelected.getDtEnd());
+            tx_fecha.setText(getDate(eventSelected.getDtStart()) + "  -  " + getDate(eventSelected.getDtEnd()));
 
             TextView tx_calendario = (TextView) findViewById(R.id.mv_correo_calendario);
             tx_calendario.setText(eventSelected.getCalendar());
@@ -75,5 +79,10 @@ public class ActivityShowEvent extends Activity {
         }catch(Exception exp) {
 
         }
+    }
+
+    public String getDate(Long date)
+    {
+        return new SimpleDateFormat("h:mm a").format(new Date(date));
     }
 }

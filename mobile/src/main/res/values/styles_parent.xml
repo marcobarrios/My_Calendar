@@ -34,4 +34,9 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="shadowStyle" parent="android:TextAppearance.Holo.Widget.TextView">
+        <item name="android:windowContentOverlay">@drawable/shadow</item>
+        <item name="android:background">@drawable/ab_solid_mycalendar</item>
+        </style>
+
 </resources>

@@ -49,7 +49,7 @@ public class QuerysCalendar {
                 CalendarContract.Events.DTEND,
         };
         final int ID_INDEX = 0, TITLE_INDEX = 1, DESC_INDEX = 2, LOCATION_INDEX = 3,
-                START_INDEX = 4, END_INDEX = 5, ACCOUNT_NAME = 6;
+                START_INDEX = 4, END_INDEX = 5;
 
         final String selection = "("+ CalendarContract.Events.OWNER_ACCOUNT+" = ? AND "+ CalendarContract.Events._ID+" = ?)";
         final String[] selectionArgs = new String[] {calendar_mail, id+""};
@@ -87,28 +87,38 @@ public class QuerysCalendar {
         cv.put(CalendarContract.Events.EVENT_LOCATION, location);
         cv.put(CalendarContract.Events.DESCRIPTION, description);
         cv.put(CalendarContract.Events.EVENT_TIMEZONE, "America/Guatemala");
+        cv.put(CalendarContract.Events.EVENT_COLOR, 0xffff0000);
         Uri uri = cr.insert(buildEventUri(calendar_mail), cv);
 
         return Long.parseLong(uri.getLastPathSegment());
     }
 
-    /**Create event - Update an event to our calendar
+    /**Update event - Update an event to our calendar
      */
     public static void updateEvent(Context ctx, String calendar_mail, Long id,String title, String description,
-                                String location,long dtstart, long dtend)
+                                String location,long dtStart, long dtEnd)
     {
-        ContentResolver cr = ctx.getContentResolver();
         ContentValues cv = new ContentValues();
         cv.put(CalendarContract.Events.CALENDAR_ID, 1);
         cv.put(CalendarContract.Events.TITLE, title);
-        cv.put(CalendarContract.Events.DTSTART, dtstart);
-        cv.put(CalendarContract.Events.DTEND, dtend);
+        cv.put(CalendarContract.Events.DTSTART, dtStart);
+        cv.put(CalendarContract.Events.DTEND, dtEnd);
         cv.put(CalendarContract.Events.EVENT_LOCATION, location);
         cv.put(CalendarContract.Events.DESCRIPTION, description);
         cv.put(CalendarContract.Events.EVENT_TIMEZONE, "America/Guatemala");
         Uri updateUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, id);
-        int rows = ctx.getContentResolver().update(updateUri, cv, null, null);
+        ctx.getContentResolver().update(updateUri, cv, null, null);
 
+    }
+
+    /**Delete event - Delete an event to our calendar
+     */
+    public static void deleteEvent(Context ctx, Long id)
+    {
+        ContentResolver cr = ctx.getContentResolver();
+        String selection = "("+ CalendarContract.Events._ID+" = ?)";
+        String[] selectionArgs = new String[] {String.valueOf(id)};
+        cr.delete(CalendarContract.Events.CONTENT_URI, selection, selectionArgs);
     }
 
     public static ArrayList<EventItem> getEventsOfDay(Context context,int day,int month ,int year ) {

@@ -1,6 +1,7 @@
 package com.dsoft.mycalendar.Calendar;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -40,6 +41,7 @@ import static android.provider.CalendarContract.Calendars;
 public class FragmentMonthCalender extends Fragment implements View.OnClickListener , OnDateSelected {
 
     private View v;
+    private ActionBar actionbar;
     private FloatingActionButton btnNewEvent;
     protected static final int REQUEST_CODE = 10;
     private TextView currentMonth;
@@ -60,10 +62,7 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
             "April", "May", "June", "July", "August", "September",
             "October", "November", "December" };
 
-    String[] EVENT_PROJECTION = new String[]{CalendarContract.Events.TITLE,
-            CalendarContract.Events.EVENT_LOCATION, CalendarContract.Instances.BEGIN,
-            CalendarContract.Instances.END, CalendarContract.Events.ALL_DAY};
-    private TextView events;
+    private TextView daySelected;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,7 +81,8 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
         currentMonth.setText(DateFormat.format(dateTemplate,
                 _calendar.getTime()));
 
-        events = (TextView) v.findViewById(R.id.events);
+        daySelected = (TextView) v.findViewById(R.id.dia_seleccionado);
+        daySelected.setText(DateFormat.format("EEEE, MMMM yyyy",_calendar));
 
         nextMonth = (ImageView) v.findViewById(R.id.nextMonth);
         nextMonth.setOnClickListener(this);
@@ -177,6 +177,8 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
         //list_events.setAdapter(getAdapaterEvent(getEventsOfDay(Integer.parseInt(theday),getMonthNumber(themonth),Integer.parseInt(theyear))));
         setAdapterEventList(QuerysCalendar.getEventsOfDay(getActivity().getApplicationContext(),Integer.parseInt(theday), getMonthNumber(themonth), Integer.parseInt(theyear)));
         //getLastThreeEvents(Integer.parseInt(theday),getMonthNumber(themonth),Integer.parseInt(theyear));
+        _calendar.set(Integer.parseInt(theyear),getMonthNumber(themonth),Integer.parseInt(theday));
+        daySelected.setText(DateFormat.format("EEEE, MMMM yyyy",_calendar));
     }
 
     /**
@@ -185,14 +187,16 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
      * @param year On Date Selected (1-12)
      */
     private void setGridCellAdapterToDate(int month, int year) {
+
         adapter = new GridCellAdapter(getActivity().getApplicationContext(),
                 R.id.calendar_day_gridcell, month, year,this);
         int aux = month - 1;
         _calendar.set(year,aux, _calendar.get(Calendar.DAY_OF_MONTH));
-        currentMonth.setText(DateFormat.format(dateTemplate,
-                _calendar.getTime()));
+        currentMonth.setText(DateFormat.format(dateTemplate,_calendar.getTime()));
         adapter.notifyDataSetChanged();
         calendarView.setAdapter(adapter);
+        ///
+        daySelected.setText(DateFormat.format("EEEE, MMMM yyyy",_calendar));
     }
 
     /**
@@ -223,7 +227,7 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
         list_events.setAdapter(event);
     }
 
-    public int getMonthNumber(String month)
+    public int getMonthNumber(Object month)
     {
         if(month.equals(months[0]))
               return Calendar.JANUARY;
@@ -254,7 +258,7 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
 
     public String getDate(Long date)
     {
-        return new SimpleDateFormat("hh:mm:ss").format(new Date(date));
+        return new SimpleDateFormat("h:mm a").format(new Date(date));
     }
 
     public void initButtonFAB() {
