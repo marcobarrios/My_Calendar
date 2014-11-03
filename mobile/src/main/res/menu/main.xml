@@ -1,8 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MyActivity">
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never"/>
+
+    <item android:id="@+id/menu_btn_eliminar"
+        android:title="Eliminar"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:showAsAction="ifRoom"/>
+
 </menu>

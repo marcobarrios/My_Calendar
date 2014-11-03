@@ -4,13 +4,14 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TabHost;
-import android.widget.Toast;
 
 import com.dsoft.mycalendar.R;
 import com.faizmalkani.floatingactionbutton.FloatingActionButton;
@@ -23,8 +24,7 @@ import java.util.ArrayList;
 public class FragmentAnotaciones extends Fragment {
     View v;
     FloatingActionButton btn;
-    private EditText txtTitulo, txtDescripcion;
-    protected static final int REQUEST_CODE = 10;
+    protected static final int REQUEST_CODE = 1;
 
     private ArrayAdapter<Anotacion> adapter;
     private ListView notesListView;
@@ -36,30 +36,25 @@ public class FragmentAnotaciones extends Fragment {
         v = inflater.inflate(R.layout.fragment_view_anotaciones, container, false);
         inicializarComponentes();
         inicializarListView();
-        inicializarTabs();
         return v;
     }
 
     public void inicializarComponentes() {
-        txtTitulo = (EditText)v.findViewById(R.id.cmpTitulo);
-        txtDescripcion = (EditText)v.findViewById(R.id.cmpDescripcion);
         notesListView = (ListView)v.findViewById(R.id.listView);
+        notesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> listEvents, View view, int position, long id) {
+
+                }
+            });
 
         btn = (FloatingActionButton)v.findViewById(R.id.fab_anotacion);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent i =  new Intent(getActivity().getApplicationContext(), ActivityAnotacion.class);
+                Intent i =  new Intent(getActivity().getApplicationContext(), ActivityAnotacion.class);
                 //i.putExtra("fecha", String.valueOf(calendario.getDate()));
-                //startActivity(i);
-                agregarContacto(
-                        txtTitulo.getText().toString(),
-                        txtDescripcion.getText().toString(),
-                        "29/10/2014"
-                );
-                String msj = "Se ha agregado a la lista: " + txtTitulo.getText();
-                Toast.makeText(view.getContext(), msj, Toast.LENGTH_SHORT).show();
-                limpiarCampos();
+                startActivityForResult(i, REQUEST_CODE);
             }
         });
     }
@@ -74,36 +69,35 @@ public class FragmentAnotaciones extends Fragment {
         notesListView.setAdapter(adapter);
     }
 
-    private void inicializarTabs() {
-        TabHost tabHost = (TabHost)v.findViewById(R.id.tabHost);
-        tabHost.setup();
-
-        TabHost.TabSpec  spec = tabHost.newTabSpec("tab1");
-        spec.setContent(R.id.tab1);
-        spec.setIndicator("Nueva");
-        tabHost.addTab(spec);
-
-        spec = tabHost.newTabSpec("tab2");
-        spec.setContent(R.id.tab2);
-        spec.setIndicator("Notas");
-        tabHost.addTab(spec);
-    }
-
-    private void limpiarCampos() {
-        txtTitulo.getText().clear();
-        txtDescripcion.getText().clear();
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
             super.onActivityResult(requestCode, resultCode, data);
             if (requestCode == REQUEST_CODE) {
-                String result = data.getStringExtra("result");
-                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                String title = data.getStringExtra("titulo");
+                String descripcion = data.getStringExtra("descripcion");
+                agregarContacto(title, descripcion, "20/10/2014");
             }
         }catch(Exception exp) {
 
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.menu_btn_eliminar);
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }

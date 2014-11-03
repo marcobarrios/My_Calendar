@@ -6,95 +6,29 @@
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true"
     android:clipToPadding="false"
-    android:paddingLeft="0dp"
-    android:paddingRight="0dp"
-    android:paddingTop="0dp"
-    android:paddingBottom="0dp"
+    android:background="#e0e0e0"
     tools:context=".MyActivity">
 
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#e0e0e0"
+        android:id="@+id/listView"
+        android:divider="@color/transparente"/>
 
-        <FrameLayout
-            android:id="@+id/container"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-            <TabHost
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/tabHost"
-                android:layout_gravity="center_horizontal|top">
+        <com.faizmalkani.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_anotacion"
+            app:color="#ebe91e63"
+            app:drawable="@drawable/ic_anotacion_nuevo"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="16dp"/>
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="vertical">
-
-                    <TabWidget
-                        android:id="@android:id/tabs"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content">
-
-                        </TabWidget>
-
-                    <FrameLayout
-                        android:id="@android:id/tabcontent"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent">
-
-                        <LinearLayout
-                            android:id="@+id/tab1"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:orientation="vertical"
-                            android:background="@color/common_signin_btn_dark_text_default">
-
-                            <FrameLayout
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent">
-
-                            <EditText
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="Titulo de la Anotacion"
-                                android:layout_marginTop="10dp"
-                                android:id="@+id/cmpTitulo" />
-
-                            <EditText
-                                android:layout_width="fill_parent"
-                                android:layout_height="200dp"
-                                android:layout_marginTop="10dp"
-                                android:hint="Texto de la Anotacion"
-                                android:id="@+id/cmpDescripcion" />
-
-                            <com.faizmalkani.floatingactionbutton.FloatingActionButton
-                                android:id="@+id/fab_anotacion"
-                                app:color="#e91e63"
-                                app:drawable="@drawable/ic_anotacion_nuevo"
-                                android:layout_width="72dp"
-                                android:layout_height="72dp"
-                                android:layout_gravity="bottom|center"
-                                android:layout_marginBottom="16dp"/>
-
-                            </FrameLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/tab2"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:orientation="vertical"
-                            android:background="@color/button_disabled">
-
-                            <ListView
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/listView" />
-                        </LinearLayout>
-
-                    </FrameLayout>
-                </LinearLayout>
-            </TabHost>
-        </FrameLayout>
+    </FrameLayout>
 
 </RelativeLayout>

@@ -158,7 +158,7 @@ public class MyActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        return false;
+        return true;
     }
 
     @Override
@@ -169,7 +169,7 @@ public class MyActivity extends Activity {
         }
         // Handle action bar actions click
         switch (item.getItemId()) {
-            case R.id.action_settings:
+            case R.id.menu_btn_eliminar:
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -183,9 +183,10 @@ public class MyActivity extends Activity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         // if nav drawer is opened, hide the action items
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+        menu.findItem(R.id.menu_btn_eliminar).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
+
 
     /**
      * Diplaying fragment view for selected nav drawer list item
