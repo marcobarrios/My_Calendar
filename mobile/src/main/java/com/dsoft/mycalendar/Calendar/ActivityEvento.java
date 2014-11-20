@@ -3,18 +3,21 @@ package com.dsoft.mycalendar.Calendar;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.Time;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -40,8 +43,8 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
     Button btn_end_date;
     Button btn_start_time;
     Button btn_end_time;
-    Button btn_mail_calendar;
-    Button btn_alertar;
+    Spinner spn_alerta;
+    Spinner spn_mail_calendar;
     Switch swt_is_all_day;
 
     EditText edt_title;
@@ -54,6 +57,8 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
     Boolean is_edition;
     Long idEvent;
 
+    String [] alert_events;
+
     private static final int OK_RESULT_CODE = 1;
 
     @Override
@@ -61,12 +66,13 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_crear_evento);
 
-        ActionBar actionbar = this.getActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
+        //ActionBar actionbar = this.getActionBar();
+        //actionbar.setDisplayHomeAsUpEnabled(true);
 
         fly_btn_date = true;
         fly_btn_time = true;
         fly_btn_alerta = false;
+        alert_events = getResources().getStringArray(R.array.alerts_event);
 
        /* if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
@@ -81,31 +87,6 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
         //TextView texto = (TextView)findViewById(R.id.texto_fecha);
         //texto.setText(reicieveParams.getString("fecha"));
 
-        btn_save_event = (FloatingActionButton) findViewById(R.id.retornar);
-        btn_save_event.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EventItem event = getEvent();
-                long id;
-                if(!is_edition) {
-                    id = QuerysCalendar.addEvent(getApplicationContext(), (String) btn_mail_calendar.getTag(), event.getTitle(),
-                            event.getDescription(), "", event.getDtStart(), event.getDtEnd());
-
-                }else
-                {
-                    //Query Edición
-                    id = QuerysCalendar.updateEvent(getApplicationContext(), (String) btn_mail_calendar.getTag(), idEvent, event.getTitle(),
-                            event.getDescription(), "", event.getDtStart(), event.getDtEnd());
-                }
-
-                if(fly_btn_alerta)
-                {
-                    QuerysCalendar.addReminderEvent(getApplicationContext(),id, (Integer)btn_alertar.getTag());
-                }
-                returnParams();
-
-            }
-        });
 
         btn_start_date = (Button) findViewById(R.id.fecha_inicio);
         btn_end_date = (Button) findViewById(R.id.fecha_fin);
@@ -157,45 +138,29 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
             }
         });
 
-        btn_mail_calendar = (Button) findViewById(R.id.btn_correo_calendario);
-        btn_mail_calendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Mostrar Dialog de cunetas asociadas.
-                //DialogFragment newFragment = new TimePickerFragment();
-                //newFragment.show(getFragmentManager(), "timePicker");
-            }
-        });
+        spn_mail_calendar = (Spinner) findViewById(R.id.spn_correo_calendario);
 
-        btn_alertar = (Button) findViewById(R.id.btn_alertas);
-        btn_alertar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(fly_btn_alerta)
-                {
-                    btn_alertar.setText("Ninguna");
-                    btn_alertar.setTag(0);
-                    fly_btn_alerta = false;
-                }
-                else
-                {
-                    btn_alertar.setText("10 minutos");
-                    btn_alertar.setTag(10);
-                    fly_btn_alerta = true;
-                }
-            }
-        });
+        ArrayAdapter<String> adapterMail = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,getAccounts());
+        spn_mail_calendar.setAdapter(adapterMail);
+        spn_mail_calendar.setSelection(0);
+
+        spn_alerta = (Spinner) findViewById(R.id.spn_alerta);
+        ArrayAdapter<String> adapterAlert = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,alert_events);
+        spn_alerta.setAdapter(adapterAlert);
+        spn_alerta.setSelection(2);
+
 
         swt_is_all_day = (Switch) findViewById(R.id.es_todo_el_dia);
         swt_is_all_day.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
-                    btn_start_time.setEnabled(false);
-                    btn_end_time.setEnabled(false);
+
+                    btn_start_time.setVisibility(View.INVISIBLE);
+                    btn_end_time.setVisibility(View.INVISIBLE);
                 } else {
-                    btn_start_time.setEnabled(true);
-                    btn_end_time.setEnabled(true);
+                    btn_start_time.setVisibility(View.VISIBLE);
+                    btn_end_time.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -221,6 +186,51 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
             iniciarPlantilla();
             is_edition = false;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_events, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar actions click
+        switch (item.getItemId()) {
+            case R.id.menu_btn_save:
+                EventItem event = getEvent();
+                long id;
+                if(!is_edition) {
+                    id = QuerysCalendar.addEvent(getApplicationContext(), (String) spn_mail_calendar.getSelectedItem(), event.getTitle(),
+                            event.getDescription(), "", event.getDtStart(), event.getDtEnd());
+
+                }else
+                {
+                    //Query Edición
+                    id = QuerysCalendar.updateEvent(getApplicationContext(), (String) spn_mail_calendar.getSelectedItem(), idEvent, event.getTitle(),
+                            event.getDescription(), "", event.getDtStart(), event.getDtEnd());
+                }
+
+                if(fly_btn_alerta)
+                {
+                    QuerysCalendar.addReminderEvent(getApplicationContext(),id, getIntegerAlert((String)spn_alerta.getSelectedItem()));
+                }
+                returnParams();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /* *
+     * Called when invalidateOptionsMenu() is triggered
+     */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // if nav drawer is opened, hide the action items
+        menu.findItem(R.id.menu_btn_save).setVisible(true);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @TargetApi(19)
@@ -335,8 +345,8 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
         btn_end_time.setTag(R.id.tag_first,hour);
         btn_end_time.setTag(R.id.tag_second,Integer.parseInt(minute));
 
-        btn_mail_calendar.setText(getAccounts());
-        btn_mail_calendar.setTag(getAccounts());
+        //btn_mail_calendar.setText(getAccounts());
+        //btn_mail_calendar.setTag(getAccounts());
     }
 
     /**
@@ -386,8 +396,13 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
         btn_end_time.setTag(R.id.tag_first,hour);
         btn_end_time.setTag(R.id.tag_second,minute);
 
-        btn_mail_calendar.setText(event.getCalendar());
-        btn_mail_calendar.setTag(event.getCalendar());
+        String countMail [] = {event.getCalendar()};
+        ArrayAdapter<String> adapterMail = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,countMail);
+        spn_mail_calendar.setAdapter(adapterMail);
+        spn_mail_calendar.setSelection(0);
+
+        //btn_mail_calendar.setText(event.getCalendar());
+        //btn_mail_calendar.setTag(event.getCalendar());
 
 
     }
@@ -408,25 +423,62 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
         Calendar endTime = Calendar.getInstance();
         endTime.set(2014,(Integer)btn_end_date.getTag(R.id.tag_first), (Integer)btn_end_date.getTag(R.id.tag_second), (Integer)btn_end_time.getTag(R.id.tag_first), (Integer)btn_end_time.getTag(R.id.tag_second));
         endMillis = endTime.getTimeInMillis();
-        return new EventItem(edt_title.getText().toString(),edt_description.getText().toString(),"Guatemala", (String)btn_mail_calendar.getTag(), startMillis,endMillis);
+        return new EventItem(edt_title.getText().toString(),edt_description.getText().toString(),"Guatemala", (String)spn_mail_calendar.getSelectedItem(), startMillis,endMillis);
     }
 
     /**
      * Get All Account available in Phone and add into list
      */
-    private String getAccounts() {
+    private String [] getAccounts() {
+
+
         final AccountManager accManager = AccountManager
                 .get(this);
         final Account accounts[] = accManager.getAccountsByType("com.google");
-        String temporal = accounts[0].name;
+        int posAccount = 0;
+        String [] calendars = new String[accounts.length];
         for (Account account : accounts) {
             Toast.makeText(this, "Name " + account.name, Toast.LENGTH_SHORT).show();
+            calendars[posAccount] = account.name;
+            posAccount++;
         }
-        return temporal;
+        return calendars;
     }
 
-    public String getDate(Long date)
+    private String getDate(Long date)
     {
         return new SimpleDateFormat("h:mm a").format(new Date(date));
+    }
+
+    private int getIntegerAlert(String alert)
+    {
+        if(alert.equals(alert_events[0]))
+            return 0;
+        else if (alert.equals(alert_events[1]))
+            return  1;
+        else if (alert.equals(alert_events[2]))
+            return  10;
+        else if (alert.equals(alert_events[3]))
+            return  15;
+        else if (alert.equals(alert_events[4]))
+            return  30;
+        else
+            return 5;
+    }
+
+    private int posAlertEvent(int alert)
+    {
+        if(alert == 0)
+            return 0;
+        else if (alert == 1)
+            return  1;
+        else if (alert == 10)
+            return  2;
+        else if (alert == 15)
+            return  3;
+        else if (alert == 30)
+            return  4;
+        else
+            return  5;
     }
 }

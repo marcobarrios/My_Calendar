@@ -128,6 +128,40 @@
                     android:layout_marginTop="20dp"
                     android:paddingLeft="@dimen/view_margin"
                     android:paddingRight="@dimen/view_margin"
+                    android:text="Lugar"/>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="@dimen/view_margin"
+                    android:text="Lugar"/>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="@dimen/view_margin"
+                    android:paddingRight="@dimen/view_margin"
+                    android:text="Descripción"/>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="@dimen/view_margin"
+                    android:text="Descripcion"/>
+
+
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="@dimen/view_margin"
+                    android:paddingRight="@dimen/view_margin"
                     android:text="Alertas"/>
 
                 <ListView

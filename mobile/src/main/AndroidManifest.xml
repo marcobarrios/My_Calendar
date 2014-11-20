@@ -49,6 +49,22 @@
                 android:value="com.dsoft.mycalendar.MyActivity" />
         </activity>
 
+        <activity
+            android:name=".Calendar.NotificationReceiverActivity"
+            android:parentActivityName="com.dsoft.mycalendar.MyActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dsoft.mycalendar.MyActivity" />
+        </activity>
+
+        <receiver
+            android:name="com.dsoft.mycalendar.Calendar.CalendarReminderReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.EVENT_REMINDER" />
+                <data android:scheme="content"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
     <uses-permission
@@ -60,5 +76,13 @@
     <uses-permission
         android:name="android.permission.GET_ACCOUNTS">
     </uses-permission>
+
+    <receiver
+        android:name="com.dsoft.mycalendar.Calendar.CalendarReminderReceiver">
+        <intent-filter>
+            <action android:name="android.intent.action.EVENT_REMINDER" />
+            <data android:scheme="content"/>
+        </intent-filter>
+    </receiver>
 
 </manifest>

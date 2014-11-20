@@ -172,14 +172,14 @@
                     android:paddingLeft="10dp"
                     android:text="Calendario"/>
 
-                <Button
+                <Spinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/view_margin"
                     android:layout_marginRight="@dimen/view_margin"
-                    android:id="@+id/btn_correo_calendario"
                     android:background="@drawable/mycalendar_spinner_background_holo_light"
-                    android:text="Correo Calendario"/>
+                    android:id="@+id/spn_correo_calendario"/>
+
 
                 <TextView
                     android:layout_width="fill_parent"
@@ -188,15 +188,13 @@
                     android:paddingLeft="10dp"
                     android:text="Alertas"/>
 
-                <Button
-                    android:layout_width="200dp"
+                <Spinner
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/view_margin"
                     android:layout_marginRight="@dimen/view_margin"
                     android:background="@drawable/mycalendar_spinner_background_holo_light"
-                    android:id="@+id/btn_alertas"
-                    android:layout_marginBottom="10dp"
-                    android:text="Ninguna"/>
+                    android:id="@+id/spn_alerta"/>
 
                 <TextView
                     android:layout_width="fill_parent"
@@ -220,19 +218,10 @@
                     android:hint="Descripción del Evento"
                     android:singleLine="false"/>
 
-
             </LinearLayout>
 
         </ScrollView>
 
-        <com.faizmalkani.floatingactionbutton.FloatingActionButton
-            android:id="@+id/retornar"
-            app:color="@color/MyCalendar_color_darker"
-            app:drawable="@drawable/ic_guardar"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="8dp"/>
-
     </FrameLayout>
+
 </RelativeLayout>
