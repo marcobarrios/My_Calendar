@@ -204,18 +204,20 @@ public class ActivityEvento extends Activity implements OnDateSelected, OnTimeSe
                 if(!is_edition) {
                     id = QuerysCalendar.addEvent(getApplicationContext(), (String) spn_mail_calendar.getSelectedItem(), event.getTitle(),
                             event.getDescription(), "", event.getDtStart(), event.getDtEnd());
+                    QuerysCalendar.addReminderEvent(getApplicationContext(),id, getIntegerAlert((String)spn_alerta.getSelectedItem()));
 
                 }else
                 {
                     //Query Edición
                     id = QuerysCalendar.updateEvent(getApplicationContext(), (String) spn_mail_calendar.getSelectedItem(), idEvent, event.getTitle(),
                             event.getDescription(), "", event.getDtStart(), event.getDtEnd());
-                }
-
-                if(fly_btn_alerta)
-                {
                     QuerysCalendar.addReminderEvent(getApplicationContext(),id, getIntegerAlert((String)spn_alerta.getSelectedItem()));
                 }
+
+                /*if(fly_btn_alerta)
+                {
+                    QuerysCalendar.addReminderEvent(getApplicationContext(),id, getIntegerAlert((String)spn_alerta.getSelectedItem()));
+                }*/
                 returnParams();
                 return true;
             default:

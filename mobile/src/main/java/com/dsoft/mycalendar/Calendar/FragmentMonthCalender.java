@@ -120,6 +120,9 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
             if (requestCode == REQUEST_CODE) {
                 String result = data.getStringExtra("result");
                 Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                Time time = new Time();
+                time.setToNow();
+                setAdapterEventList(QuerysCalendar.getEventsOfDay(getActivity().getApplicationContext(),time.monthDay, month - 1, year));
             }
         }catch(Exception exp) {
 
@@ -179,6 +182,10 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
         //getLastThreeEvents(Integer.parseInt(theday),getMonthNumber(themonth),Integer.parseInt(theyear));
         _calendar.set(Integer.parseInt(theyear),getMonthNumber(themonth),Integer.parseInt(theday));
         daySelected.setText(DateFormat.format("EEEE, MMMM yyyy",_calendar));
+
+        //
+
+
     }
 
     /**
@@ -224,6 +231,8 @@ public class FragmentMonthCalender extends Fragment implements View.OnClickListe
                 texto_inferior_entrada.setText(((EventItem) entrada).getTitle());
             }
         };
+
+        list_events.removeAllViewsInLayout();
         list_events.setAdapter(event);
     }
 
