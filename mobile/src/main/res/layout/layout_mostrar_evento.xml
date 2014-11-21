@@ -136,6 +136,7 @@
                     android:layout_marginTop="20dp"
                     android:paddingLeft="20dp"
                     android:paddingRight="@dimen/view_margin"
+                    android:id="@+id/mv_lugar"
                     android:text="Lugar"/>
 
                 <TextView
@@ -152,6 +153,7 @@
                     android:layout_marginTop="20dp"
                     android:paddingLeft="20dp"
                     android:paddingRight="@dimen/view_margin"
+                    android:id="@+id/mv_descrip"
                     android:text="Descripcion"/>
 
 

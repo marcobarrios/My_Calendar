@@ -78,6 +78,12 @@ public class ActivityShowEvent extends Activity {
 
             TextView tx_calendario = (TextView) findViewById(R.id.mv_correo_calendario);
             tx_calendario.setText(eventSelected.getCalendar());
+
+            TextView tx_lugar = (TextView) findViewById(R.id.mv_lugar);
+            tx_lugar.setText(eventSelected.getLocation());
+
+            TextView tx_des = (TextView) findViewById(R.id.mv_descrip);
+            tx_des.setText(eventSelected.getDescription());
         }
     }
 
